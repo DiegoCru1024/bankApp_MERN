@@ -1,0 +1,100 @@
+:root {
+    --naranja: #ff7800;
+    --azul: #003296;
+}
+
+* {
+    margin: 0;
+    font-family: "Roboto Light", sans-serif;
+}
+
+body {
+    overflow: hidden;
+}
+
+/********************/
+/**   Navigation   **/
+/********************/
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+}
+
+.navbar-section {
+    display: flex;
+    align-items: center;
+    width: 65%;
+}
+
+.navbar-section img {
+    height: 4rem;
+}
+
+.navbar-container ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar-container li {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    padding: 0 1rem 0 1rem;
+    transition: ease-out 0.1s;
+}
+
+.navbar-container li:hover {
+    color: var(--azul);
+    transition: ease-out 0.1s;
+}
+
+.navbar-container-link{
+    background: var(--naranja);
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    border: 0 solid;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: ease-out 0.25s;
+}
+
+.navbar-container-link:hover{
+    color: var(--azul);
+    transition: ease-out 0.25s;
+    cursor: pointer;
+}
+
+/********************/
+/**     Header     **/
+/********************/
+
+.header-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50vh;
+    border-radius: 0 0 10% 10%;
+    background: var(--azul);
+}
+
+.welcome-text {
+    width: 65%;
+    color: white;
+}
+
+.welcome-text h1 {
+    font-size: 3rem;
+    padding: 4rem 0;
+}
+
+.welcome-text p {
+    width: 75%;
+    font-size: 1.5rem;
+}
