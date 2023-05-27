@@ -21,7 +21,7 @@ export default function RegisterPage() {
     const enviarDatos = async (e) => {
         e.preventDefault();
         try {
-            const url = 'http://192.168.18.27:5000/registerAPI';
+            const url = 'https://bankapp-backend.onrender.com/registerAPI';
             const {data: res} = await axios.post(url, data);
             navigate("/userLogin");
             console.log(res.message);

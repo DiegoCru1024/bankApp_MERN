@@ -20,7 +20,7 @@ export default function LoginPage() {
     const enviarDatos = async (e) => {
         e.preventDefault();
         try {
-            const url = 'http://192.168.18.27:5000/loginAPI';
+            const url = 'https://bankapp-backend.onrender.com/loginAPI';
             const {data: res} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
             navigate("/auth/platform");
