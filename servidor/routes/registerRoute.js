@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
         await new userModel({...req.body, password: encryptedPass}).save()
         res.status(201).send({message: 'Usuario registrado con exito...'})
     } catch (e) {
+        console.log(e)
         res.status(500).send({message: 'Error interno de servidor...'})
     }
 })

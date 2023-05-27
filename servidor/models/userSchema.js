@@ -14,7 +14,7 @@ userSchema.methods.generarToken = function () {
     return jwt.sign({_id: this._id}, process.env.PRIVATE_KEY, {expiresIn: '7d'})
 }
 
-const userModel = mongoose.model("userTEST", userSchema)
+const userModel = mongoose.model("usuario", userSchema)
 
 const validarDatos = (data) => {
     const Schema = joi.object({

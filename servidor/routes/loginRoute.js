@@ -18,13 +18,14 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos las credenciales de acceso
-        const validPassword = bcrypt.compare(req.body.password, userData.password)
+        console.log(userData.password)
+        const validPassword = await bcrypt.compare(req.body.password, userData.password)
         if (!validPassword) {
             return res.status(401).send({message: 'Correo o contraseña inválida...'})
         }
 
         //Generamos el Token de Autenticación
-        const token = userModel.generarToken()
+        const token = userModel.generarToken
         res.status(200).send({data: token, message: 'Inicio de sesión exitoso...'})
     } catch (e) {
         res.status(500).send({message: 'Error interno de servidor...'})

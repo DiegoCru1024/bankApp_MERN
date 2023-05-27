@@ -12,7 +12,7 @@ function App() {
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/userLogin" element={<LoginPage/>}/>
                 <Route path="/userRegister" element={<RegisterPage/>}/>
-                {userData && <Route path="/" element={<PlatformPage/>}/>}
+                <Route path="/auth/platform" element={<PlatformPage/>}/>
             </Routes>
         </BrowserRouter>
     );

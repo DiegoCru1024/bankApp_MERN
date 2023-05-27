@@ -1,48 +1,40 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {Helmet} from "react-helmet";
 import axios from "axios";
 import logo from '../img/logo.png'
 import './registerStyle.css'
 
 export default function RegisterPage() {
-    const [data, setData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
-    })
+    const [data, setData] = useState({firstName: '', lastName: '', email: '', password: ''})
 
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const detectarCambios = ({currentTarget: input}) => {
-        setData({...data, [input.name]: [input.value]})
+    const detectarCambio = (event) => {
+        const {name, value} = event.target
+        setData(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
     }
 
     const enviarDatos = async (e) => {
         e.preventDefault();
         try {
-            const url = 'IP/registerAPI';
+            const url = 'http://192.168.18.27:5000/registerAPI';
             const {data: res} = await axios.post(url, data);
             navigate("/userLogin");
             console.log(res.message);
         } catch (error) {
-            if (
-                error.response &&
-                error.response.status >= 400 &&
-                error.response.status <= 500
-            ) {
+            console.log(error.response.data)
+            if (error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setError(error.response.data.message);
             }
         }
     };
 
     return (
-        <body>
-        <Helmet>
-            <title>BCF | Registro</title>
-        </Helmet>
+
         <section className="main-container">
             <div className="left-banner">
                 <img src={logo} alt="Logo"></img>
@@ -53,18 +45,24 @@ export default function RegisterPage() {
 
             <div className="right-banner">
                 <div className="login-container">
-                    <h2>Ingrese sus datos para continuar:</h2><br></br>
+                    <h2>Ingrese sus datos para registrarse:</h2><br></br>
                     <div>
-                        <label htmlFor="username">Usuario:</label><br></br>
-                        <input type="text" id="username" name="username"></input><br></br>
-                        <br></br><br></br>
-                        <label htmlFor="password">Contraseña:</label><br></br>
-                        <input type="password" id="password" name="password"></input><br></br>
-                        <br></br>
-                        <button>Iniciar Sesión</button>
+                        <form onSubmit={enviarDatos}>
+                            <input type="text" placeholder="Nombre" onChange={detectarCambio} required
+                                   value={data.firstName} name="firstName"></input><br></br>
+                            <input type="text" placeholder="Apellido" onChange={detectarCambio}
+                                   required value={data.lastName} name="lastName"></input><br></br>
+                            <input type="email" placeholder="Correo electrónico" onChange={detectarCambio}
+                                   required value={data.email} name="email"></input><br></br>
+                            <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
+                                   value={data.password} name="password"></input><br></br>
+                            {error && <div>{error}</div>}
+                            <br></br>
+                            <button type="submit">Registrarse</button>
+                        </form>
                     </div>
-                    <p>¿Aún no tienes cuenta?</p>
-                    <Link to="/userRegister" className="register-button">Registrate Aquí</Link>
+                    <p>¿Ya estas registrado?</p>
+                    <Link to="/userLogin" className="login-button">Inicia sesión aquí</Link>
                 </div>
             </div>
 
@@ -72,6 +70,5 @@ export default function RegisterPage() {
                 <Link to="/" className="return-button">↶ Volver a la pagina principal</Link>
             </div>
         </section>
-        </body>
     );
 }

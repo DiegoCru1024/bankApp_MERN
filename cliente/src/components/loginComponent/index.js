@@ -1,48 +1,66 @@
-import React, {Component} from 'react';
-import {Helmet} from "react-helmet";
+import {useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 import logo from '../img/logo.png'
 import './loginStyle.css'
-import {Link} from "react-router-dom";
 
-class LoginPage extends Component {
-    render() {
-        return (
-            <body>
-            <Helmet>
-                <title>BCF | Iniciar Sesion</title>
-            </Helmet>
-            <section className="main-container">
-                <div className="left-banner">
-                    <img src={logo} alt="Logo"></img>
-                    <h2>Bienvenido a nuestra plataforma de Banca en Línea</h2>
-                    <p>Por favor inicie sesión para continuar...</p>
 
-                </div>
+export default function LoginPage() {
+    const [data, setData] = useState({email: '', password: ''})
+    const navigate = useNavigate()
 
-                <div className="right-banner">
-                    <div className="login-container">
-                        <h2>Ingrese sus datos para continuar:</h2><br></br>
-                        <div>
-                            <label htmlFor="username">Usuario:</label><br></br>
-                            <input type="text" id="username" name="username"></input><br></br>
-                            <br></br><br></br>
-                            <label htmlFor="password">Contraseña:</label><br></br>
-                            <input type="password" id="password" name="password"></input><br></br>
-                            <br></br>
-                            <button>Iniciar Sesión</button>
-                        </div>
-                        <p>¿Aún no tienes cuenta?</p>
-                        <Link to="/userRegister" className="register-button">Registrate Aquí</Link>
-                    </div>
-                </div>
-
-                <div>
-                    <Link to="/" className="return-button">↶ Volver a la pagina principal</Link>
-                </div>
-            </section>
-            </body>
-        );
+    const detectarCambio = (event) => {
+        const {name, value} = event.target
+        setData(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
     }
-}
 
-export default LoginPage;
+    const enviarDatos = async (e) => {
+        e.preventDefault();
+        try {
+            const url = 'http://192.168.18.27:5000/loginAPI';
+            const {data: res} = await axios.post(url, data);
+            localStorage.setItem("token", res.data)
+            navigate("/auth/platform");
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    return (
+        <body>
+        <section className="main-container">
+            <div className="left-banner">
+                <img src={logo} alt="Logo"></img>
+                <h2>Bienvenido a nuestra plataforma de Banca en Línea</h2>
+                <p>Por favor inicie sesión para continuar...</p>
+
+            </div>
+
+            <div className="right-banner">
+                <div className="login-container">
+                    <h2>Ingrese sus datos para continuar:</h2><br></br>
+                    <div>
+                        <form onSubmit={enviarDatos}>
+                            <input type="email" placeholder="Correo electrónico" onChange={detectarCambio}
+                                   required value={data.email} name="email"></input><br></br>
+                            <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
+                                   value={data.password} name="password"></input><br></br>
+                            <br></br>
+                            <button type="submit">Iniciar Sesión</button>
+                        </form>
+                    </div>
+                    <p>¿Aún no tienes cuenta?</p>
+                    <Link to="/userRegister" className="register-button">Registrate Aquí</Link>
+                </div>
+            </div>
+
+            <div>
+                <Link to="/" className="return-button">↶ Volver a la pagina principal</Link>
+            </div>
+        </section>
+        </body>
+    );
+}
