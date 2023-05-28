@@ -16,13 +16,9 @@ mongoDB()
 //Configuración de Express y CORS
 app.disable("x-powered-by")
 
-const corsOptions = {
-    origin: 'https://viabcf.tech'
-};
-
 //Middlewares
 app.use(express.json())
-app.use(cors(corsOptions))
+app.use(cors())
 
 //Rutas
 app.use('/loginAPI', loginRoute)
