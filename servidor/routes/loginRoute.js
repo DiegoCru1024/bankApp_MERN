@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {userModel} = require('../models/userSchema')
+const {studentModel} = require('../models/studentSchema')
 const bcrypt = require('bcrypt')
 const joi = require('joi')
 
@@ -12,20 +12,19 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos que el usuario este registrado
-        const userData = await userModel.findOne({email: req.body.email})
-        if (!userData) {
+        const studentData = await studentModel.findOne({email: req.body.email})
+        if (!studentData) {
             return res.status(401).send({message: 'Correo o contraseña inválida...'})
         }
 
         //Comprobamos las credenciales de acceso
-        console.log(userData.password)
-        const validPassword = await bcrypt.compare(req.body.password, userData.password)
+        const validPassword = await bcrypt.compare(req.body.password, studentData.password)
         if (!validPassword) {
             return res.status(401).send({message: 'Correo o contraseña inválida...'})
         }
 
         //Generamos el Token de Autenticación
-        const token = userModel.generarToken
+        const token = studentModel.generarToken
         res.status(200).send({data: token, message: 'Inicio de sesión exitoso...'})
     } catch (e) {
         res.status(500).send({message: 'Error interno de servidor...'})

@@ -5,7 +5,14 @@ import logo from '../img/logo.png'
 import './registerStyle.css'
 
 export default function RegisterPage() {
-    const [data, setData] = useState({firstName: '', lastName: '', email: '', password: ''})
+    const [data, setData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        number: '',
+        studentCode: ''
+    })
 
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -56,6 +63,10 @@ export default function RegisterPage() {
                                    required value={data.email} name="email"></input><br></br>
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
+                            <input type="number" placeholder="Teléfono" onChange={detectarCambio} required
+                                   value={data.number} name="number"></input><br></br>
+                            <input type="number" placeholder="Código de Estudiante" onChange={detectarCambio} required
+                                   value={data.studentCode} name="studentCode"></input><br></br>
                             {error && <div>{error}</div>}
                             <br></br>
                             <button type="submit">Registrarse</button>

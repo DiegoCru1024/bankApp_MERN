@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {userModel, validarDatos} = require('../models/userSchema')
+const {studentModel, validarDatos} = require('../models/studentSchema')
 const bcrypt = require('bcrypt')
 
 router.post('/', async (req, res) => {
@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos si el usuario existe
-        const userData = await userModel.findOne({email: req.body.email})
+        const studentData = await studentModel.findOne({email: req.body.email})
         if (userData) {
             return res.status(401).send({message: 'Este correo electrónico ya se encuentra registrado...'})
         }
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
         const salt = await bcrypt.genSalt(Number(process.env.SALT))
         const encryptedPass = await bcrypt.hash(req.body.password, salt)
 
-        await new userModel({...req.body, password: encryptedPass}).save()
+        await new studentModel({...req.body, password: encryptedPass}).save()
         res.status(201).send({message: 'Usuario registrado con exito...'})
     } catch (e) {
         console.log(e)
