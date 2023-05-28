@@ -3,6 +3,8 @@ import MainPage from "./components/mainPageComponent";
 import LoginPage from "./components/loginComponent";
 import RegisterPage from "./components/registerComponent";
 import PlatformPage from "./components/platformComponent";
+import OperationsPage from "./components/operationsPageComponent";
+import AccountPage from "./components/accountPageComponent";
 
 function App() {
     const userData = localStorage.getItem('token')
@@ -13,6 +15,8 @@ function App() {
                 <Route path="/userLogin" element={<LoginPage/>}/>
                 <Route path="/userRegister" element={<RegisterPage/>}/>
                 <Route path="/auth/platform" element={<PlatformPage/>}/>
+                <Route path="/auth/operations" element={<OperationsPage/>}/>
+                <Route path="/auth/account" element={<AccountPage/>}/>
             </Routes>
         </BrowserRouter>
     );

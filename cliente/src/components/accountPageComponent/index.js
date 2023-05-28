@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "../headerComponent";
 
-export default function PlatformPage() {
+export default function AccountPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,17 +14,11 @@ export default function PlatformPage() {
         }
     })
 
-    const logOut = () => {
-        localStorage.removeItem('token')
-        navigate('/')
-    }
-
     return (
         <main>
             <Header/>
             <div>
-                <h1>Contenido protegido</h1>
-                <button onClick={logOut}>Log Out</button>
+                <h1>AccountPage en construcción...</h1>
             </div>
         </main>
     );

@@ -4,7 +4,6 @@ import axios from "axios";
 import logo from '../img/logo.png'
 import './loginStyle.css'
 
-
 export default function LoginPage() {
     const [data, setData] = useState({email: '', password: ''})
     const navigate = useNavigate()
@@ -21,8 +20,9 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             const url = 'https://bankapp-backend.onrender.com/loginAPI';
-            const {data: res} = await axios.post(url, data);
+            const {data: res, model: model} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
+            localStorage.setItem('studentData', JSON.stringify(model))
             navigate("/auth/platform");
         } catch (error) {
             console.log(error)
