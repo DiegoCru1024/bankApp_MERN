@@ -3,6 +3,7 @@ require('dotenv').config()
 
 
 //Importados las dependencias a utilizar
+const cors = require('cors')
 const express = require('express')
 const mongoDB = require('./databaseDriver')
 const loginRoute = require('./routes/loginRoute')
@@ -18,6 +19,8 @@ app.disable("x-powered-by")
 
 //Middlewares
 app.use(express.json())
+app.use(cors())
+
 
 //Rutas
 app.use('/loginAPI', loginRoute)
