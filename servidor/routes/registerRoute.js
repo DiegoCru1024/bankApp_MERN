@@ -22,7 +22,6 @@ router.post('/', async (req, res) => {
 
         await new studentModel({...req.body, password: encryptedPass}).save()
         res.status(201).send({message: 'Usuario registrado con exito...'})
-        res.header('Access-Control-Allow-Origin', '*')
     } catch (e) {
         console.log(e)
         res.status(500).send({message: 'Error interno de servidor...'})
