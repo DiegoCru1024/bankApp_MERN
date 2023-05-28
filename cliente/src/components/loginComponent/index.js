@@ -5,6 +5,7 @@ import logo from '../img/logo.png'
 import './loginStyle.css'
 
 export default function LoginPage() {
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [data, setData] = useState({email: '', password: ''})
     const navigate = useNavigate()
 
@@ -19,12 +20,14 @@ export default function LoginPage() {
     const enviarDatos = async (e) => {
         e.preventDefault();
         try {
+            setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/loginAPI';
             const {data: res, model: model} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))
             navigate("/auth/platform");
         } catch (error) {
+            setButtonDisabled(false)
             console.log(error)
         }
     };
@@ -49,7 +52,7 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <button type="submit">Iniciar Sesión</button>
+                            <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
                     </div>
                     <p>¿Aún no tienes cuenta?</p>

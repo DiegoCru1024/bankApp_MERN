@@ -14,6 +14,7 @@ export default function RegisterPage() {
         studentCode: ''
     })
 
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -28,11 +29,13 @@ export default function RegisterPage() {
     const enviarDatos = async (e) => {
         e.preventDefault();
         try {
+            setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/registerAPI';
             const {data: res} = await axios.post(url, data);
             navigate("/userLogin");
             console.log(res.message);
         } catch (error) {
+            setButtonDisabled(false)
             console.log(error.response.data)
             if (error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setError(error.response.data.message);
@@ -69,7 +72,7 @@ export default function RegisterPage() {
                                    value={data.studentCode} name="studentCode"></input><br></br>
                             {error && <div>{error}</div>}
                             <br></br>
-                            <button type="submit">Registrarse</button>
+                            <button type="submit" disabled={isButtonDisabled}>Registrarse</button>
                         </form>
                     </div>
                     <p>¿Ya estas registrado?</p>
