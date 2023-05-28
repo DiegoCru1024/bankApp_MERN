@@ -18,7 +18,7 @@ export default function PlatformPage() {
         <main>
             <Header/>
             <div>
-                <h1>Contenido protegido</h1>
+                <h1>PlatformPage en construcción...</h1>
             </div>
         </main>
     );
