@@ -14,17 +14,11 @@ export default function PlatformPage() {
         }
     })
 
-    const logOut = () => {
-        localStorage.removeItem('token')
-        navigate('/')
-    }
-
     return (
         <main>
             <Header/>
             <div>
                 <h1>Contenido protegido</h1>
-                <button onClick={logOut}>Log Out</button>
             </div>
         </main>
     );

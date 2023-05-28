@@ -8,7 +8,7 @@
     font-family: "Roboto Light", sans-serif;
 }
 
-.main-container{
+.header-main-container{
     background: var(--azul);
     padding: 30px;
     display: flex;
@@ -17,29 +17,29 @@
     font-size: 24px;
 }
 
-.main-container ul {
+.header-main-container ul {
     height: 100%;
     display: flex;
     list-style: none;
     align-items: center;
 }
 
-.main-container img{
+.header-main-container img{
     width: 64px;
     color: white;
 }
 
-.main-container ul li{
+.header-main-container ul li{
     padding: 0 25px 0 25px;
 }
 
-.main-container ul li a{
+.header-main-container ul li a{
     color: white;
     text-decoration: none;
     transition: ease-out 0.1s;
 }
 
-.main-container ul li a:hover{
+.header-main-container ul li a:hover{
     color: var(--naranja);
     text-decoration: none;
     transition: ease-out 0.25s;

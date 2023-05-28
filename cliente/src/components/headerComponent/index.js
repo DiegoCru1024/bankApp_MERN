@@ -2,14 +2,15 @@ import './headerStyle.css'
 import userIMG from "../img/user.png";
 import {Link} from "react-router-dom";
 const Header = () => {
-
+    const storedModel = localStorage.getItem('studentData')
+    const parsedModel = JSON.parse(storedModel)
 
     return (
-        <main className="main-container">
+        <main className="header-main-container">
             <div>
                 <ul>
                     <li><img src={userIMG} alt="user"></img></li>
-                    <li>Bienvenido {localStorage.getItem('studentData')}</li>
+                    <li>Bienvenido {parsedModel.firstName}</li>
                 </ul>
             </div>
             <div>
