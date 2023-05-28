@@ -11,7 +11,8 @@ export default function RegisterPage() {
         email: '',
         password: '',
         number: '',
-        studentCode: ''
+        studentCode: '',
+        isAdmin: false
     })
 
     const [isButtonDisabled, setButtonDisabled] = useState(false);

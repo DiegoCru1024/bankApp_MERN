@@ -9,7 +9,8 @@ const studentSchema = new mongoose.Schema({
     email: {type: String, required: true},
     password: {type: String, required: true},
     number: {type: Number, required: true},
-    studentCode: {type: Number, required: true}
+    studentCode: {type: Number, required: true},
+    isAdmin: {type: Boolean, required: true}
 })
 
 studentSchema.methods.generarToken = function () {
