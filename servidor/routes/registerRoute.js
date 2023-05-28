@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
         //Comprobamos si el usuario existe
         const studentData = await studentModel.findOne({email: req.body.email})
-        if (userData) {
+        if (studentData) {
             return res.status(401).send({message: 'Este correo electrónico ya se encuentra registrado...'})
         }
 
