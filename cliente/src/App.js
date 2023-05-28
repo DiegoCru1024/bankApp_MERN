@@ -7,7 +7,6 @@ import OperationsPage from "./components/operationsPageComponent";
 import AccountPage from "./components/accountPageComponent";
 
 function App() {
-    const userData = localStorage.getItem('token')
     return (
         <BrowserRouter>
             <Routes>
