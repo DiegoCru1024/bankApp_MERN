@@ -1,15 +1,11 @@
 import './headerStyle.css'
-import {useNavigate} from "react-router-dom";
-import userIMG from "../img/user.png";
 import {Link} from "react-router-dom";
-
-
+import userIMG from "../img/user.png";
 
 const Header = () => {
     const storedModel = localStorage.getItem('studentData')
     const parsedModel = JSON.parse(storedModel)
 
-    const navigate = useNavigate()
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('studentData')

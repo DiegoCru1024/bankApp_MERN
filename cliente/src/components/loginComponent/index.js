@@ -22,7 +22,7 @@ export default function LoginPage() {
         try {
             setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/loginAPI';
-            const {data: res, model: model} = await axios.post(url, data);
+            const {data: res} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))
             navigate("/auth/platform");
