@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
         //Generamos el Token de Autenticación
         const token = studentModel.generarToken
         res.status(200).send({data: token, model: studentData, message: 'Inicio de sesión exitoso...'})
+        res.header('Access-Control-Allow-Origin', '*')
     } catch (e) {
         res.status(500).send({message: 'Error interno de servidor...'})
     }

@@ -1,6 +1,7 @@
 //Importamos las variables de entorno
 require('dotenv').config()
 
+
 //Importados las dependencias a utilizar
 const express = require('express')
 const cors = require('cors')
