@@ -33,6 +33,7 @@ export default function PlatformPage() {
                 }
             });
             setAccounts(response.data);
+            console.log(accounts[0].accountBalance)
         } catch (error) {
             console.error(error);
         }
