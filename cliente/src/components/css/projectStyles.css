@@ -1,0 +1,267 @@
+:root {
+    --naranja: #ff7800;
+    --azul: #003296;
+}
+
+* {
+    margin: 0;
+    font-family: "Roboto Light", sans-serif;
+}
+
+/* Header Styles */
+
+.header-main-container {
+    background: var(--azul);
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 24px;
+}
+
+.header-main-container ul {
+    height: 100%;
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.header-main-container img {
+    width: 64px;
+    color: white;
+}
+
+.header-main-container ul li {
+    padding: 0 25px 0 25px;
+}
+
+.header-main-container ul li a {
+    color: white;
+    text-decoration: none;
+    transition: ease-out 0.1s;
+}
+
+.header-main-container ul li a:hover {
+    color: var(--naranja);
+    text-decoration: none;
+    transition: ease-out 0.25s;
+}
+
+/* Login Styles */
+
+.login-main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-left-banner {
+    background: var(--azul);
+    width: 35vw;
+    height: 100vh;
+    border-radius: 0 25px 25px 0;
+    color: white;
+}
+
+.login-left-banner img {
+    margin: 5rem 0 0 5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 50px 20px 50px 20px;
+    width: 200px;
+}
+
+.login-left-banner h2 {
+    font-size: 2rem;
+    padding: 5rem;
+}
+
+.login-left-banner p {
+    font-size: 1.2rem;
+    padding: 5rem;
+}
+
+.login-right-banner {
+    width: 65vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container {
+    padding: 5rem;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 15px black;
+}
+
+.login-form-container h2 {
+    color: var(--naranja);
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+}
+
+.login-form-container label {
+    font-size: 1.2rem;
+}
+
+.login-form-container input {
+    font-size: 1.2rem;
+    border: 1px solid var(--azul);
+    border-radius: 15px;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+
+.login-form-container div button {
+    margin-top: 2rem;
+    background: var(--naranja);
+    color: white;
+    font-size: 1.2rem;
+    border: 0 solid black;
+    border-radius: 15px;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.login-form-container p {
+    color: var(--azul);
+    margin-top: 5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.login-form-container a {
+    color: var(--naranja);
+    font-size: 1.2rem;
+    transition: ease-out 0.25s;
+}
+
+.login-form-container a:hover {
+    color: var(--azul);
+    transition: ease-out 0.5s;
+}
+
+.login-return-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--naranja);
+    font-size: 1.2rem;
+    font-weight: bolder;
+    text-decoration: none;
+    margin: 2rem;
+    transition: ease-out 0.25s;
+}
+
+.login-return-button:hover {
+    color: var(--azul);
+    transition: ease-out 0.5s;
+}
+
+.login-register-button {
+    text-decoration: none;
+    color: var(--naranja);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.login-error-message {
+    border: 1px solid #dc3545;
+    background: #f6ccd0;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* Platform Styles */
+.platform-main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+.platform-operations {
+    width: 45%;
+}
+
+.platform-operations h1 {
+    color: var(--naranja);
+    padding: 50px 0;
+}
+
+.operations-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+    width: 100%;
+}
+
+.operations-grid-container a {
+    font-size: 18px;
+    padding: 30px;
+    background: #fae6d8;
+    border: 1px solid var(--naranja);
+    border-radius: 10px;
+    transition: ease-out 0.1s;
+    text-decoration: none;
+    color: black;
+}
+
+.operations-grid-container a:hover {
+    transform: scale(1.05);
+    transition: ease-out 0.2s;
+}
+
+.platform-accounts {
+    width: 45%;
+}
+
+.platform-accounts h1 {
+    color: var(--naranja);
+    padding: 50px 0;
+}
+
+.account {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f2f5f7;
+    border: 1px solid #58656f;
+}
+
+.account h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.account p {
+    font-size: 20px;
+}
+
+/* Create Account Page Styles */
+.create-account-main-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.create-account-menu {
+    text-align: center;
+    background: #f2f5f7;
+    border: 1px solid #58656f;
+    padding: 50px 0;
+    width: 50%;
+}
+
+.create-account-menu h1 {
+    color: var(--naranja);
+    padding: 50px 0;
+}
+
+.create-account-form {
+    width: 80%;
+    margin: auto;
+    text-align: left;
+}

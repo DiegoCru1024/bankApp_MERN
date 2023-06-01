@@ -31,4 +31,4 @@ const validarDatos = (data) => {
     return Schema.validate(data)
 }
 
-module.exports = { studentModel, validarDatos }
+module.exports = {studentModel, validarDatos}

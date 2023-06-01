@@ -8,6 +8,7 @@ const express = require('express')
 const mongoDB = require('./databaseDriver')
 const loginRoute = require('./routes/loginRoute')
 const registerRoute = require('./routes/registerRoute')
+const createAccountRoute = require('./routes/createAccountRoute')
 const app = express()
 
 
@@ -27,10 +28,10 @@ const corsOptions = {
 app.use(express.json())
 app.use(cors(corsOptions))
 
-
 //Rutas
 app.use('/loginAPI', loginRoute)
 app.use('/registerAPI', registerRoute)
+app.use('/accountAPI', createAccountRoute)
 
 //Iniciando servidor
 app.listen(process.env.PORT, () => {
