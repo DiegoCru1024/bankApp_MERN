@@ -24,6 +24,10 @@ const Header = () => {
                     <li><Link to="/auth/platform">INICIO</Link></li>
                     <li><Link to="/auth/operations">OPERACIONES</Link></li>
                     <li><Link to="/auth/account" on>CUENTA</Link></li>
+                    {parsedModel.isAdmin ? (
+                        <li><Link to="/auth/admin" on>ADMIN</Link></li>
+                    ) : (<null/>)
+                    }
                     <li><Link onClick={logOut} to='/'>SALIR</Link></li>
                 </ul>
             </div>

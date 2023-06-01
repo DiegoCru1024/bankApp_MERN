@@ -8,6 +8,7 @@ export default function LoginPage() {
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [data, setData] = useState({email: '', password: ''})
     const navigate = useNavigate()
+    let errorMessage
 
     const detectarCambio = (event) => {
         const {name, value} = event.target
@@ -28,6 +29,7 @@ export default function LoginPage() {
             navigate("/auth/platform");
         } catch (error) {
             setButtonDisabled(false)
+            errorMessage = res.message()
             console.log(error)
         }
     };
@@ -52,6 +54,7 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
+                            <p>Test: {errorMessage.message}</p>
                             <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
                     </div>
