@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const crypto = require('crypto')
 const joi = require('joi')
 
 const accountSchema = new mongoose.Schema({
@@ -15,9 +16,9 @@ const accountSchema = new mongoose.Schema({
 const accountModel = mongoose.model("cuenta", accountSchema)
 
 const generarID = () => {
-    const min = Math.pow(10, 11)
-    const max = Math.pow(10, 12) - 1
-    return Math.floor(Math.random() * (max - min + 1) + min)
+    const bytes = crypto.randomBytes(6);
+    const numero = parseInt(bytes.toString('hex'), 16);
+    return numero.toString().padStart(12, '0');
 }
 
 const validarDatos = (data) => {
