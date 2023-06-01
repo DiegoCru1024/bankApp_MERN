@@ -7,7 +7,7 @@ const accountSchema = new mongoose.Schema({
     ownerUserID: {type: Number, required: true},
     accountName: {type: String, required: true},
     accountID: {type: Number, required: true},
-    accountBalance: {type: Number, required: true},
+    accountBalance: {type: mongoose.Schema.Types.Decimal128, required: true},
     accountCurrencyType: {type: String, required: true}
 
 })
