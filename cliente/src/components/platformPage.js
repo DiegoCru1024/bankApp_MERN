@@ -59,7 +59,7 @@ export default function PlatformPage() {
                         {accounts.map((account, index) => (
                             <div key={account.accountID} className="account">
                                 <h2>{account.accountName}</h2>
-                                <p>{account.accountCurrencyType + " " + account.accountBalance.toString()}</p>
+                                <p>{account.accountCurrencyType + " " + account.accountBalance.toNumber()}</p>
                             </div>
                         ))}
                     </div>
