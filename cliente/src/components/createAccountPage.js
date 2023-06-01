@@ -34,7 +34,6 @@ export default function CreateAccountPage() {
         setData(prevState => ({
             ...prevState, [name]: value
         }))
-        console.log(data)
     }
 
     const enviarDatos = async (e) => {
