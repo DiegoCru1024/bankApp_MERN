@@ -54,7 +54,7 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <p>Test: {errorMessage.message}</p>
+                            <p>Testing</p>
                             <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
                     </div>
