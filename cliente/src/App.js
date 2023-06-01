@@ -12,7 +12,6 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                //Paginas Principales
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/userLogin" element={<LoginPage/>}/>
                 <Route path="/userRegister" element={<RegisterPage/>}/>
@@ -21,7 +20,6 @@ function App() {
                 <Route path="/auth/account" element={<AccountPage/>}/>
                 <Route path="/auth/admin" element={<AdminPage/>}/>
 
-                //Paginas de Operaciones
                 <Route path="/auth/accountCreate" element={<CreateAccountPage/>}/>
             </Routes>
         </BrowserRouter>

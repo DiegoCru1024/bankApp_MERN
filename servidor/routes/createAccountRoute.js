@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             return res.status(400).send({message: dataError.details[0].message})
         }
 
-        await new accountModel({...req.body}).save()
+        await new accountModel({...req.body.toString()}).save()
         res.status(201).send({message: 'Cuenta de ahorros creada con éxito...'})
     } catch (e) {
         console.log(e)

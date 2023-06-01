@@ -18,7 +18,6 @@ export default function CreateAccountPage() {
     })
 
     const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {

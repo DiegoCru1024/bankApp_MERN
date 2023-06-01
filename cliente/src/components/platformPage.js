@@ -18,7 +18,11 @@ export default function PlatformPage() {
             navigate('/')
         }
 
-        searchAccounts()
+        searchAccounts().then(() => {
+            console.log('Datos recibidos...')
+        }).catch((error) => {
+            console.log(error)
+        })
     }, [])
 
     const searchAccounts = async () => {
@@ -53,9 +57,9 @@ export default function PlatformPage() {
                     <h1>Cuentas de ahorro</h1>
                     <div className="accounts-container">
                         {accounts.map((account, index) => (
-                            <div key={index} className="account">
+                            <div key={account.accountID} className="account">
                                 <h2>{account.accountName}</h2>
-                                <p>{account.accountCurrencyType + " " + account.accountBalance}</p>
+                                <p>{account.accountCurrencyType + " " + account.accountBalance.toString()}</p>
                             </div>
                         ))}
                     </div>

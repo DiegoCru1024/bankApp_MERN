@@ -34,6 +34,7 @@ export default function RegisterPage() {
             const url = 'https://bankapp-backend.onrender.com/registerAPI';
             const {data: res} = await axios.post(url, data);
             navigate("/userLogin");
+            console.log(res.body.message)
         } catch (error) {
             setButtonDisabled(false)
             console.log(error.response.data)
