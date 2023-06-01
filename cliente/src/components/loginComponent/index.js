@@ -26,10 +26,10 @@ export default function LoginPage() {
             const {data: res} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))
+            errorMessage = res.message
             navigate("/auth/platform");
         } catch (error) {
             setButtonDisabled(false)
-            errorMessage = res.message()
             console.log(error)
         }
     };
