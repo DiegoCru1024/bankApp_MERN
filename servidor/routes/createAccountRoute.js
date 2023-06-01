@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
     const studentCode = req.query.studentCode
 
     try {
-        const accountModels = await accountModel.find({ownerUserID: studentCode});
+        const accountModels = await accountModel.find({ownerUserID: studentCode.toString()});
         res.json(accountModels);
     } catch (error) {
         res.status(500).json({error: 'Error al buscar modelos...'});
