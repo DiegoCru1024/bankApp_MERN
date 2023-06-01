@@ -7,8 +7,8 @@ import './loginStyle.css'
 export default function LoginPage() {
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [data, setData] = useState({email: '', password: ''})
+    const [resMessage, setResMessage] = useState({message: ''})
     const navigate = useNavigate()
-    let errorMessage
 
     const detectarCambio = (event) => {
         const {name, value} = event.target
@@ -26,7 +26,7 @@ export default function LoginPage() {
             const {data: res} = await axios.post(url, data);
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))
-            errorMessage = res.message
+            setResMessage(res.message)
             navigate("/auth/platform");
         } catch (error) {
             setButtonDisabled(false)
@@ -54,7 +54,9 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <p>Testing</p>
+                            <div>
+                                {resMessage && <div>{resMessage}</div>}
+                            </div>
                             <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
                     </div>
