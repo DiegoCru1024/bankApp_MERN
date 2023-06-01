@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
         let accountData
         do {
             req.body.accountID = generarID()
-            accountData = await accountModel.findOne({accountID: req.body.accountID})
+            accountData = await accountModel.findOne({accountID: req.body.accountID.toString()})
         } while (accountData)
 
         //Comprobamos si los datos ingresados son correctos
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             return res.status(400).send({message: dataError.details[0].message})
         }
 
-        await new accountModel({...req.body.toString()}).save()
+        await new accountModel({...req.body}).save()
         res.status(201).send({message: 'Cuenta de ahorros creada con éxito...'})
     } catch (e) {
         console.log(e)
