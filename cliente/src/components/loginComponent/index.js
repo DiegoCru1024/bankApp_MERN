@@ -56,8 +56,8 @@ export default function LoginPage() {
                             <br></br>
                             <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
-                        
-                        {resMessage && <div>{resMessage}</div>}
+
+                        {resMessage.message && <div>{resMessage.message}</div>}
                     </div>
                     <p>¿Aún no tienes cuenta?</p>
                     <Link to="/userRegister" className="register-button">Registrate Aquí</Link>
