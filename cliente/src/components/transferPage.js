@@ -42,7 +42,8 @@ export default function TransferPage() {
         try {
             setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/operationsAPI/transferMoney'
-            const {data: res} = await axios.post(url, data)
+            const response = await axios.post(url, data)
+            console.log(response.status)
             navigate("/auth/platform")
         } catch (error) {
             console.log(error)
@@ -72,7 +73,7 @@ export default function TransferPage() {
                     <p>Seleccione la cuenta de origen:</p>
                     <select className="combobox" title="origin" name="accountOriginID" onChange={detectarCambio}>
                         <option value="">-- Elija una opción --</option>
-                        {accounts.map((account, index) => (<option
+                        {accounts.map((account, index) => (<option key={account.accountID}
                             value={account.accountID}>{account.accountName + " - " + account.accountCurrencyType + " " + account.accountBalance}</option>))}
                     </select>
 
