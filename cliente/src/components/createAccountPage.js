@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import axios from "axios";
+import './css/projectStyles.css'
 
 export default function CreateAccountPage() {
     const storedModel = localStorage.getItem('studentData')
