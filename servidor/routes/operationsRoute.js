@@ -7,7 +7,13 @@ router.post('/createAccount', async (req, res) => {
         let accountData
         do {
             req.body.accountID = generarID()
-            accountData = await accountModel.findOne({accountID: req.body.accountID.toString()})
+            accountModel.findOne({accountID: req.body.accountID.toString()})
+                .then((result) => {
+                    accountData = result
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         } while (accountData)
 
         //Comprobamos si los datos ingresados son correctos
@@ -28,16 +34,35 @@ router.get('/getAccounts', async (req, res) => {
     const studentCode = req.query.studentCode
 
     try {
-        const accountModels = await accountModel.find({ownerUserID: studentCode.toString()});
-        res.json(accountModels);
+        accountModel.find({ownerUserID: studentCode.toString()})
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     } catch (error) {
         res.status(500).json({error: 'Error al buscar modelos...'});
     }
 })
 
 router.post('/transferMoney', async (req, res) => {
-    const originAccount = await accountModel.findOne({accountID: req.body.accountOriginID.toString()})
-    const destinyAccount = await accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
+    let originAccount, destinyAccount
+    accountModel.findOne({accountID: req.body.accountOriginID.toString()})
+        .then((result) => {
+            originAccount = result
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+    accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
+        .then((result) => {
+            destinyAccount = result
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 
     //Comprobamos que la cuenta ingresada exista
     if (!destinyAccount) {
@@ -58,11 +83,7 @@ router.post('/transferMoney', async (req, res) => {
     const originBalance = parseFloat(originAccount.accountBalance) - parseFloat(req.body.transferValue)
     const destinyBalance = parseFloat(destinyAccount.accountBalance) + parseFloat(req.body.transferValue)
 
-    accountModel.findOneAndUpdate(
-        {accountID: req.body.accountOriginID.toString()},
-        {$set: {accountBalance: originBalance.toFixed(2)}},
-        {new: true}
-    ).then((updatedUser) => {
+    accountModel.findOneAndUpdate({accountID: req.body.accountOriginID.toString()}, {$set: {accountBalance: originBalance.toFixed(2)}}, {new: true}).then((updatedUser) => {
         // El usuario se actualizó correctamente
         console.log('Usuario actualizado:', updatedUser);
     }).catch((err) => {
@@ -70,11 +91,7 @@ router.post('/transferMoney', async (req, res) => {
         console.error(err);
     })
 
-    accountModel.findOneAndUpdate(
-        {accountID: req.body.accountDestinyID.toString()},
-        {$set: {accountBalance: destinyBalance.toFixed(2)}},
-        {new: true}
-    ).then((updatedUser) => {
+    accountModel.findOneAndUpdate({accountID: req.body.accountDestinyID.toString()}, {$set: {accountBalance: destinyBalance.toFixed(2)}}, {new: true}).then((updatedUser) => {
         // El usuario se actualizó correctamente
         console.log('Usuario actualizado:', updatedUser);
     }).catch((err) => {
