@@ -40,17 +40,17 @@ export default function CreateAccountPage() {
         e.preventDefault();
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/accountAPI';
+            const url = 'https://bankapp-backend.onrender.com/operationsAPI/createAccount';
             const {data: res} = await axios.post(url, data);
             navigate("/auth/platform");
             console.log(res.message);
         } catch (error) {
             setButtonDisabled(false)
-            console.log(error.response.data)
         }
     };
 
-    return (<main>
+    return (
+        <main>
             <Header/>
             <div className="create-account-main-container">
                 <div className="create-account-menu">
@@ -59,14 +59,20 @@ export default function CreateAccountPage() {
                         <p>Ingrese un nombre para su cuenta de ahorros:</p>
                         <input type="text" placeholder="Nombre distintivo de cuenta" onChange={detectarCambio} required
                                value={data.accountName} name="accountName"></input><br></br>
+                        <p>Seleccione el tipo de divisa:</p>
+                        <div className="radio-button">
+                            <input type="radio" id="option1" name="accountCurrencyType" value="PEN"
+                                   onChange={detectarCambio}></input>
+                            <label htmlFor="option1">S/. Soles</label>
+                        </div>
+                        <div className="radio-button">
+                            <input type="radio" id="option2" name="accountCurrencyType" value="USD"
+                                   onChange={detectarCambio}></input>
+                            <label htmlFor="option2">$ Dolares</label>
+                        </div>
 
-                        <input type="radio" id="option1" name="accountCurrencyType" value="PEN" onChange={detectarCambio}></input>
-                        <label htmlFor="option1">S/. Soles</label><br></br>
-
-                        <input type="radio" id="option2" name="accountCurrencyType" value="USD" onChange={detectarCambio}></input>
-                        <label htmlFor="option2">$ Dolares</label><br></br>
-
-                        <button type="submit" disabled={isButtonDisabled}>Crear Cuenta</button>
+                        <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Crear Cuenta
+                        </button>
                     </form>
                 </div>
             </div>

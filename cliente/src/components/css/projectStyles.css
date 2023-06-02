@@ -8,6 +8,24 @@
     font-family: "Roboto Light", sans-serif;
 }
 
+.main-button-style {
+    margin-top: 2rem;
+    background: var(--naranja);
+    color: white;
+    font-size: 1.2rem;
+    border: 0 solid black;
+    border-radius: 15px;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.error-message {
+    border: 1px solid #dc3545;
+    background: #f6ccd0;
+    padding: 10px;
+    margin-top: 20px;
+}
+
 /* Header Styles */
 
 .header-main-container {
@@ -114,17 +132,6 @@
     padding: 0.5rem;
 }
 
-.login-form-container div button {
-    margin-top: 2rem;
-    background: var(--naranja);
-    color: white;
-    font-size: 1.2rem;
-    border: 0 solid black;
-    border-radius: 15px;
-    padding: 1rem;
-    cursor: pointer;
-}
-
 .login-form-container p {
     color: var(--azul);
     margin-top: 5rem;
@@ -165,13 +172,6 @@
     color: var(--naranja);
     font-size: 1.2rem;
     cursor: pointer;
-}
-
-.login-error-message {
-    border: 1px solid #dc3545;
-    background: #f6ccd0;
-    padding: 10px;
-    margin-top: 20px;
 }
 
 /* Platform Styles */
@@ -224,6 +224,11 @@
     padding: 50px 0;
 }
 
+.accounts-container {
+    overflow-y: auto;
+    max-height: 525px;
+}
+
 .account {
     margin-bottom: 20px;
     padding: 20px;
@@ -257,11 +262,44 @@
 
 .create-account-menu h1 {
     color: var(--naranja);
-    padding: 50px 0;
+    padding: 25px;
 }
 
 .create-account-form {
     width: 80%;
     margin: auto;
     text-align: left;
+}
+
+.create-account-form p {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.create-account-form input[type="text"] {
+    font-size: 20px;
+    padding: 10px;
+    width: 100%;
+}
+
+.radio-button {
+    display: inline-block;
+    width: 50%;
+}
+
+.radio-button label {
+    font-size: 20px;
+    padding: 10px;
+}
+
+.create-account-form input[type="radio"] {
+    font-size: 20px;
+}
+
+/* Transfer Money Styles */
+.combobox {
+    font-size: 20px;
+    padding: 10px;
+    width: 100%;
 }

@@ -34,7 +34,6 @@ export default function LoginPage() {
     };
 
     return (
-        <body>
         <section className="login-main-container">
             <div className="login-left-banner">
                 <img src={logo} alt="Logo"></img>
@@ -53,10 +52,10 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <button type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
+                            <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
                         </form>
 
-                        {resMessage.message && <div className="login-error-message">{resMessage.message}</div>}
+                        {resMessage.message && <div className="error-message">{resMessage.message}</div>}
                     </div>
                     <p>¿Aún no tienes cuenta?</p>
                     <Link to="/userRegister" className="login-register-button">Registrate Aquí</Link>
@@ -67,6 +66,5 @@ export default function LoginPage() {
                 <Link to="/" className="login-return-button">↶ Volver a la pagina principal</Link>
             </div>
         </section>
-        </body>
     );
 }
