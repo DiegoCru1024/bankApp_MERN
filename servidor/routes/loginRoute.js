@@ -12,8 +12,12 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos que el usuario este registrado
-        const studentData = await studentModel.findOne({email: req.body.email.toString()})
-        if (!studentData) {
+        let studentData
+        studentModel.findOne({email: req.body.email.toString()}).then((result) => {
+            studentData = result
+        })
+
+        if (studentData.email !== req.body.email.toString()) {
             return res.status(401).send({message: 'Correo o contraseña inválida...'})
         }
 

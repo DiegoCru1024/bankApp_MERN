@@ -65,7 +65,7 @@ router.post('/transferMoney', async (req, res) => {
         })
 
     //Comprobamos que la cuenta ingresada exista
-    if (!destinyAccount) {
+    if (destinyAccount.accountID !== req.body.accountDestinyID) {
         return res.status(400).send({message: 'La cuenta de destino no existe...'})
     }
 
