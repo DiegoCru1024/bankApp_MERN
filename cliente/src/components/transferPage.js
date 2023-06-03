@@ -27,8 +27,7 @@ export default function TransferPage() {
         searchAccounts().then(() => {
             console.log('Datos recibidos...')
         }).catch((error) => {
-            setResMessage({message: error.body.message})
-            console.log(error.body.message)
+            console.log('Test')
         })
     }, [])
 
