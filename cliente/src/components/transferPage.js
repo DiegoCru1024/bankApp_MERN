@@ -47,6 +47,8 @@ export default function TransferPage() {
             console.log(response.status)
             navigate("/auth/platform")
         } catch (error) {
+            console.log('Test')
+            console.log(error.body.message)
             console.log(error.response.body.message)
             setButtonDisabled(false)
         }
