@@ -44,6 +44,11 @@ router.post('/transferMoney', async (req, res) => {
         return res.status(400).send({message: 'La cuenta de destino no existe...'})
     }
 
+    //Comprobamos que las cuentas no sean iguales
+    if (originAccount.accountID === destinyAccount.accountID) {
+        return res.status(400).send({message: 'La cuenta de origen no puede ser la cuenta de destino...'})
+    }
+
     //Comprobamos que el tipo de divisa sea el mismo
     if (originAccount.accountCurrencyType !== destinyAccount.accountCurrencyType) {
         return res.status(401).send({message: 'Las cuentas deben tener la misma divisa...'})
