@@ -12,6 +12,7 @@ export default function TransferPage() {
         accountOriginID: '', accountDestinyID: '', transferValue: ''
     })
     const [accounts, setAccounts] = useState([]);
+    const [resMessage, setResMessage] = useState({message: ''})
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const navigate = useNavigate();
 
@@ -26,7 +27,8 @@ export default function TransferPage() {
         searchAccounts().then(() => {
             console.log('Datos recibidos...')
         }).catch((error) => {
-            console.log(error)
+            setResMessage({message: error.body.message})
+            console.log(error.body.message)
         })
     }, [])
 
@@ -74,7 +76,7 @@ export default function TransferPage() {
                     <select className="combobox" title="origin" name="accountOriginID" onChange={detectarCambio}>
                         <option value="">-- Elija una opción --</option>
                         {accounts.map((account, index) => (<option key={account.accountID}
-                            value={account.accountID}>{account.accountName + " - " + account.accountCurrencyType + " " + account.accountBalance}</option>))}
+                                                                   value={account.accountID}>{account.accountName + " - " + account.accountCurrencyType + " " + account.accountBalance}</option>))}
                     </select>
 
                     <p>Ingrese el ID de la cuenta de destino:</p>
@@ -88,6 +90,8 @@ export default function TransferPage() {
                     <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Crear Cuenta
                     </button>
                 </form>
+
+                {resMessage.message && <div className="error-message">{resMessage.message}</div>}
             </div>
         </div>
     </main>);
