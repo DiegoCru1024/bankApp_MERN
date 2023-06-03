@@ -27,7 +27,7 @@ export default function TransferPage() {
         searchAccounts().then(() => {
             console.log('Datos recibidos...')
         }).catch((error) => {
-            console.log('Test')
+            console.log(error.body.message)
         })
     }, [])
 
@@ -47,7 +47,7 @@ export default function TransferPage() {
             console.log(response.status)
             navigate("/auth/platform")
         } catch (error) {
-            console.log(error)
+            console.log(error.response.body.message)
             setButtonDisabled(false)
         }
     };
