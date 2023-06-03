@@ -55,7 +55,7 @@ router.post('/transferMoney', async (req, res) => {
     }
 
     //Comprobamos que el saldo sea mayor a 0
-    if (0 < req.body.transferValue) {
+    if (req.body.transferValue < 0) {
         return res.status(400).send({message: 'El valor de transferencia debe ser mayor a 0...'})
     }
 
