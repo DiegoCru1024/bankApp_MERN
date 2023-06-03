@@ -51,12 +51,17 @@ router.post('/transferMoney', async (req, res) => {
 
     //Comprobamos que el tipo de divisa sea el mismo
     if (originAccount.accountCurrencyType !== destinyAccount.accountCurrencyType) {
-        return res.status(401).send({message: 'Las cuentas deben tener la misma divisa...'})
+        return res.status(400).send({message: 'Las cuentas deben tener la misma divisa...'})
+    }
+
+    //Comprobamos que el saldo sea mayor a 0
+    if (0 < req.body.transferValue) {
+        return res.status(400).send({message: 'El valor de transferencia debe ser mayor a 0...'})
     }
 
     //Comprobamos que el saldo sea suficiente
     if (originAccount.accountBalance < req.body.transferValue) {
-        return res.status(402).send({message: 'No hay saldo suficiente...'})
+        return res.status(400).send({message: 'No hay saldo suficiente...'})
     }
 
     //Validamos la transferencia
