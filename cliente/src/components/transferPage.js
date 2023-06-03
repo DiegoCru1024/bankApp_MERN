@@ -44,19 +44,17 @@ export default function TransferPage() {
             setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/operationsAPI/transferMoney'
             const response = await axios.post(url, data)
-            console.log(response.status)
             navigate("/auth/platform")
         } catch (error) {
-            console.log('Test')
-            console.log(error.body.message)
-            console.log(error.response.body.message)
+            setResMessage({message: error.response.data.message})
             setButtonDisabled(false)
         }
     };
 
     const searchAccounts = async () => {
         try {
-            const response = await axios.get('https://bankapp-backend.onrender.com/operationsAPI/getAccounts', {
+            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts'
+            const response = await axios.get(url, {
                 params: {
                     studentCode: parsedModel.studentCode
                 }
@@ -88,7 +86,7 @@ export default function TransferPage() {
                     <input type="text" placeholder="Monto a transferir" onChange={detectarCambio} required
                            value={data.transferValue} name="transferValue"></input><br></br>
 
-                    <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Crear Cuenta
+                    <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Enviar
                     </button>
                 </form>
 

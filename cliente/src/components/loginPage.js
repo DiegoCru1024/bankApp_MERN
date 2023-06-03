@@ -29,7 +29,7 @@ export default function LoginPage() {
             navigate("/auth/platform");
         } catch (error) {
             setButtonDisabled(false)
-            setResMessage({message: 'Correo o contraseña inválidos...'})
+            setResMessage({message: error.response.data.message})
         }
     };
 
@@ -52,7 +52,9 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Iniciar Sesión</button>
+                            <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Iniciar
+                                Sesión
+                            </button>
                         </form>
 
                         {resMessage.message && <div className="error-message">{resMessage.message}</div>}

@@ -27,7 +27,8 @@ export default function PlatformPage() {
 
     const searchAccounts = async () => {
         try {
-            const response = await axios.get('https://bankapp-backend.onrender.com/operationsAPI/getAccounts', {
+            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts'
+            const response = await axios.get(url, {
                 params: {
                     studentCode: parsedModel.studentCode
                 }
