@@ -11,10 +11,13 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos si el usuario existe
-        const studentData = await studentModel.findOne({email: req.body.email.toString()})
-        if (studentData) {
-            return res.status(401).send({message: 'Este correo electrónico ya se encuentra registrado...'})
-        }
+        studentModel.findOne({email: req.body.email.toString()}).then((studentData) => {
+            if (studentData) {
+                return res.status(401).send({message: 'Este correo electrónico ya se encuentra registrado...'})
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
 
         //Encriptamos la contraseña y guardamos los datos
         const salt = await bcrypt.genSalt(Number(process.env.SALT))

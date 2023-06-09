@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {accountModel, validarDatos, generarID} = require('../models/accountSchema')
+const {model} = require("mongoose");
 
 router.post('/createAccount', async (req, res) => {
     try {
@@ -7,7 +8,11 @@ router.post('/createAccount', async (req, res) => {
         let accountData
         do {
             req.body.accountID = generarID()
-            accountData = await accountModel.findOne({accountID: req.body.accountID.toString()})
+            accountModel.findOne({accountID: req.body.accountID.toString()}).then((modelResponse) => {
+                accountData = modelResponse
+            }).catch((error) => {
+                console.log(error)
+            })
         } while (accountData)
 
         //Comprobamos si los datos ingresados son correctos
@@ -27,17 +32,28 @@ router.post('/createAccount', async (req, res) => {
 router.get('/getAccounts', async (req, res) => {
     const studentCode = req.query.studentCode
 
-    try {
-        const accountModels = await accountModel.find({ownerUserID: studentCode.toString()});
-        res.json(accountModels);
-    } catch (error) {
+    accountModel.find({ownerUserID: studentCode.toString()}).then((modelResponse) => {
+        res.json(modelResponse)
+    }).catch((error) => {
+        console.log(error)
         res.status(500).json({error: 'Error al buscar modelos...'});
-    }
+    })
 })
 
 router.post('/transferMoney', async (req, res) => {
-    const originAccount = await accountModel.findOne({accountID: req.body.accountOriginID.toString()})
-    const destinyAccount = await accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
+    let originAccount, destinyAccount
+
+    accountModel.findOne({accountID: req.body.accountOriginID.toString()}).then((modelResponse) => {
+        originAccount = modelResponse
+    }).catch((error) => {
+        console.log(error)
+    })
+
+    accountModel.findOne({accountID: req.body.accountDestinyID.toString()}).then((modelResponse) => {
+        destinyAccount = modelResponse
+    }).catch((error) => {
+        console.log(error)
+    })
 
     //Comprobamos que la cuenta ingresada exista
     if (!destinyAccount) {
