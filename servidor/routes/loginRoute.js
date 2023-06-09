@@ -5,35 +5,33 @@ const joi = require('joi')
 
 router.post('/', async (req, res) => {
     try {
-        let studentData
-
         //Comprobamos si los datos ingresados son correctos
         const {dataError} = validarDatos(req.body)
         if (dataError) {
             return res.status(400).send({message: dataError.details[0].message})
         }
 
-        //Comprobamos que el usuario este registrado
         studentModel.findOne({email: req.body.email.toString()})
             .then((modelResponse) => {
+                //Comprobamos que el usuario este registrado
                 if (!modelResponse) {
                     return res.status(401).send({message: 'Correo o contraseña inválida...'})
                 }
-                studentData = modelResponse
+
+                //Comprobamos las credenciales de acceso
+                bcrypt.compare(req.body.password, modelResponse.password).then((validPassword) => {
+                    if (!validPassword) {
+                        return res.status(401).send({message: 'Correo o contraseña inválida...'})
+                    }
+                })
+
+                //Generamos el Token de Autenticación
+                const token = studentModel.generarToken
+                res.status(200).send({data: token, model: studentData, message: 'Inicio de sesión exitoso...'})
             })
             .catch((error) => {
                 console.log(error)
             })
-
-        //Comprobamos las credenciales de acceso
-        const validPassword = await bcrypt.compare(req.body.password, studentData.password)
-        if (!validPassword) {
-            return res.status(401).send({message: 'Correo o contraseña inválida...'})
-        }
-
-        //Generamos el Token de Autenticación
-        const token = studentModel.generarToken
-        res.status(200).send({data: token, model: studentData, message: 'Inicio de sesión exitoso...'})
     } catch (e) {
         res.status(500).send({message: 'Error interno de servidor...'})
     }
