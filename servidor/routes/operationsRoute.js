@@ -46,7 +46,7 @@ router.get('/getAccounts', async (req, res) => {
 router.post('/transferMoney', async (req, res) => {
     let originAccount, destinyAccount
 
-    accountModel.findOne({accountID: req.body.accountOriginID.toString()}).then((modelResponse) => {
+    accountModel.findOne({accountID: req.body.accountOriginID.toString()}).then(modelResponse => {
         if (modelResponse) {
             originAccount = modelResponse
         }
@@ -54,7 +54,7 @@ router.post('/transferMoney', async (req, res) => {
         console.log(error)
     })
 
-    accountModel.findOne({accountID: req.body.accountDestinyID.toString()}).then((modelResponse) => {
+    accountModel.findOne({accountID: req.body.accountDestinyID.toString()}).then(modelResponse => {
         if (modelResponse) {
             destinyAccount = modelResponse
         }
