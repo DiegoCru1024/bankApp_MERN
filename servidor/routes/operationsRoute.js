@@ -7,13 +7,7 @@ router.post('/createAccount', async (req, res) => {
         let accountData
         do {
             req.body.accountID = generarID()
-            accountModel.findOne({accountID: req.body.accountID.toString()})
-                .then((modelResponse) => {
-                    accountData = modelResponse
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+            accountData = await accountModel.findOne({accountID: req.body.accountID.toString()})
         } while (accountData)
 
         //Comprobamos si los datos ingresados son correctos
@@ -32,69 +26,14 @@ router.post('/createAccount', async (req, res) => {
 
 router.get('/getAccounts', async (req, res) => {
     const studentCode = req.query.studentCode
+    const accountModels = await accountModel.find({ownerUserID: studentCode.toString()})
 
-    accountModel.find({ownerUserID: studentCode.toString()})
-        .then((modelResponse) => {
-            res.json(modelResponse)
-        })
-        .catch((error) => {
-            console.log(error)
-            res.status(500).json({error: 'Error al buscar modelos...'});
-        })
+    res.json(accountModels)
 })
 
 router.post('/transferMoney', async (req, res) => {
-    let originAccount, destinyAccount
-
-    const getOriginAccount = () => {
-        return new Promise((resolve, reject) => {
-            accountModel.findOne({accountID: req.body.accountOriginID.toString()})
-                .then(result => {
-                    if (result) {
-                        originAccount = result;
-                        resolve(result);
-                    } else {
-                        reject(new Error('Documento no encontrado'));
-                    }
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
-    };
-
-    getOriginAccount()
-        .then(result => {
-            console.log('Cuenta de origen encontrada...');
-        })
-        .catch(error => {
-            console.error('Error al obtener el documento:', error);
-        });
-
-    const getDestinyAccount = () => {
-        return new Promise((resolve, reject) => {
-            accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
-                .then(result => {
-                    if (result) {
-                        destinyAccount = result;
-                        resolve(result);
-                    } else {
-                        reject(new Error('Documento no encontrado'));
-                    }
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
-    };
-
-    getDestinyAccount()
-        .then(result => {
-            console.log('Cuenta de destino encontrada...');
-        })
-        .catch(error => {
-            console.error('Error al obtener el documento:', error);
-        });
+    const originAccount = await accountModel.findOne({accountID: req.body.accountOriginID.toString()})
+    const destinyAccount = await accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
     
     //Comprobamos que la cuenta ingresada exista
     if (!destinyAccount) {
