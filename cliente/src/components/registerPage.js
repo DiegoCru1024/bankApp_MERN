@@ -38,6 +38,9 @@ export default function RegisterPage() {
         } catch (error) {
             setButtonDisabled(false)
             console.log(error)
+            if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+                setError(error);
+            }
         }
     };
 
