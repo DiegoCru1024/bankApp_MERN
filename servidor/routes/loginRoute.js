@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 
                 //Generamos el Token de Autenticación
                 const token = studentModel.generarToken
-                res.status(200).send({data: token, model: studentData, message: 'Inicio de sesión exitoso...'})
+                res.status(200).send({data: token, model: modelResponse, message: 'Inicio de sesión exitoso...'})
             })
             .catch((error) => {
                 console.log(error)
