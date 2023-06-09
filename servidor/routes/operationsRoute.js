@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {accountModel, validarDatos, generarID} = require('../models/accountSchema')
-const {model} = require("mongoose");
 
 router.post('/createAccount', async (req, res) => {
     try {
@@ -8,11 +7,13 @@ router.post('/createAccount', async (req, res) => {
         let accountData
         do {
             req.body.accountID = generarID()
-            accountModel.findOne({accountID: req.body.accountID.toString()}).then((modelResponse) => {
-                accountData = modelResponse
-            }).catch((error) => {
-                console.log(error)
-            })
+            accountModel.findOne({accountID: req.body.accountID.toString()})
+                .then((modelResponse) => {
+                    accountData = modelResponse
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         } while (accountData)
 
         //Comprobamos si los datos ingresados son correctos
@@ -32,25 +33,31 @@ router.post('/createAccount', async (req, res) => {
 router.get('/getAccounts', async (req, res) => {
     const studentCode = req.query.studentCode
 
-    accountModel.find({ownerUserID: studentCode.toString()}).then((modelResponse) => {
-        res.json(modelResponse)
-    }).catch((error) => {
-        console.log(error)
-        res.status(500).json({error: 'Error al buscar modelos...'});
-    })
+    accountModel.find({ownerUserID: studentCode.toString()})
+        .then((modelResponse) => {
+            res.json(modelResponse)
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({error: 'Error al buscar modelos...'});
+        })
 })
 
 router.post('/transferMoney', async (req, res) => {
     let originAccount, destinyAccount
 
     accountModel.findOne({accountID: req.body.accountOriginID.toString()}).then((modelResponse) => {
-        originAccount = modelResponse
+        if (modelResponse) {
+            originAccount = modelResponse
+        }
     }).catch((error) => {
         console.log(error)
     })
 
     accountModel.findOne({accountID: req.body.accountDestinyID.toString()}).then((modelResponse) => {
-        destinyAccount = modelResponse
+        if (modelResponse) {
+            destinyAccount = modelResponse
+        }
     }).catch((error) => {
         console.log(error)
     })
