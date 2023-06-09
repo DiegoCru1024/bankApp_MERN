@@ -5,6 +5,8 @@ const joi = require('joi')
 
 router.post('/', async (req, res) => {
     try {
+        let studentData
+
         //Comprobamos si los datos ingresados son correctos
         const {dataError} = validarDatos(req.body)
         if (dataError) {
@@ -12,13 +14,16 @@ router.post('/', async (req, res) => {
         }
 
         //Comprobamos que el usuario este registrado
-        studentModel.findOne({email: req.body.email.toString()}).then((studentData) => {
-            if (!studentData) {
-                return res.status(401).send({message: 'Correo o contraseña inválida...'})
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
+        studentModel.findOne({email: req.body.email.toString()})
+            .then((modelResponse) => {
+                if (!modelResponse) {
+                    return res.status(401).send({message: 'Correo o contraseña inválida...'})
+                }
+                studentData = modelResponse
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 
         //Comprobamos las credenciales de acceso
         const validPassword = await bcrypt.compare(req.body.password, studentData.password)
