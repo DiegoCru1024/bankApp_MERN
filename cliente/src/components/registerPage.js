@@ -37,10 +37,7 @@ export default function RegisterPage() {
             console.log(res.body.message)
         } catch (error) {
             setButtonDisabled(false)
-            console.log(error.response.data)
-            if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setError(error.response.data.message);
-            }
+            console.log(error)
         }
     };
 
