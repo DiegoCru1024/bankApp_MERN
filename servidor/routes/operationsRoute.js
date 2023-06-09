@@ -34,7 +34,7 @@ router.get('/getAccounts', async (req, res) => {
 router.post('/transferMoney', async (req, res) => {
     const originAccount = await accountModel.findOne({accountID: req.body.accountOriginID.toString()})
     const destinyAccount = await accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
-    
+
     //Comprobamos que la cuenta ingresada exista
     if (!destinyAccount) {
         return res.status(400).send({message: 'La cuenta de destino no existe...'})
