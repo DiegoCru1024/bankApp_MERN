@@ -46,22 +46,56 @@ router.get('/getAccounts', async (req, res) => {
 router.post('/transferMoney', async (req, res) => {
     let originAccount, destinyAccount
 
-    accountModel.findOne({accountID: req.body.accountOriginID.toString()}).then(modelResponse => {
-        if (modelResponse) {
-            originAccount = modelResponse
-        }
-    }).catch((error) => {
-        console.log(error)
-    })
+    const getOriginAccount = () => {
+        return new Promise((resolve, reject) => {
+            accountModel.findOne({accountID: req.body.accountOriginID.toString()})
+                .then(result => {
+                    if (result) {
+                        originAccount = result;
+                        resolve(result);
+                    } else {
+                        reject(new Error('Documento no encontrado'));
+                    }
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    };
 
-    accountModel.findOne({accountID: req.body.accountDestinyID.toString()}).then(modelResponse => {
-        if (modelResponse) {
-            destinyAccount = modelResponse
-        }
-    }).catch((error) => {
-        console.log(error)
-    })
+    getOriginAccount()
+        .then(result => {
+            console.log('Cuenta de origen encontrada...');
+        })
+        .catch(error => {
+            console.error('Error al obtener el documento:', error);
+        });
 
+    const getDestinyAccount = () => {
+        return new Promise((resolve, reject) => {
+            accountModel.findOne({accountID: req.body.accountDestinyID.toString()})
+                .then(result => {
+                    if (result) {
+                        destinyAccount = result;
+                        resolve(result);
+                    } else {
+                        reject(new Error('Documento no encontrado'));
+                    }
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    };
+
+    getDestinyAccount()
+        .then(result => {
+            console.log('Cuenta de destino encontrada...');
+        })
+        .catch(error => {
+            console.error('Error al obtener el documento:', error);
+        });
+    
     //Comprobamos que la cuenta ingresada exista
     if (!destinyAccount) {
         return res.status(400).send({message: 'La cuenta de destino no existe...'})
@@ -91,11 +125,7 @@ router.post('/transferMoney', async (req, res) => {
     const originBalance = parseFloat(originAccount.accountBalance) - parseFloat(req.body.transferValue)
     const destinyBalance = parseFloat(destinyAccount.accountBalance) + parseFloat(req.body.transferValue)
 
-    accountModel.findOneAndUpdate(
-        {accountID: req.body.accountOriginID.toString()},
-        {$set: {accountBalance: originBalance.toFixed(2)}},
-        {new: true}
-    ).then((updatedUser) => {
+    accountModel.findOneAndUpdate({accountID: req.body.accountOriginID.toString()}, {$set: {accountBalance: originBalance.toFixed(2)}}, {new: true}).then((updatedUser) => {
         // El usuario se actualizó correctamente
         console.log('Usuario actualizado:', updatedUser);
     }).catch((err) => {
@@ -103,11 +133,7 @@ router.post('/transferMoney', async (req, res) => {
         console.error(err);
     })
 
-    accountModel.findOneAndUpdate(
-        {accountID: req.body.accountDestinyID.toString()},
-        {$set: {accountBalance: destinyBalance.toFixed(2)}},
-        {new: true}
-    ).then((updatedUser) => {
+    accountModel.findOneAndUpdate({accountID: req.body.accountDestinyID.toString()}, {$set: {accountBalance: destinyBalance.toFixed(2)}}, {new: true}).then((updatedUser) => {
         // El usuario se actualizó correctamente
         console.log('Usuario actualizado:', updatedUser);
     }).catch((err) => {
