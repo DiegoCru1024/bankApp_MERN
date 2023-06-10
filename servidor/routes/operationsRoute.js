@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {accountModel, validarDatos, generarID} = require('../models/accountSchema')
+const {movementModel, validarDatosMovimiento} = require('../models/movementSchema')
 
 router.post('/createAccount', async (req, res) => {
     // Generamos un ID único para la cuenta
@@ -11,28 +12,39 @@ router.post('/createAccount', async (req, res) => {
         return accountModel.findOne({accountID: generatedID.toString()});
     }
 
-    generateUniqueID()
-        .then(data => {
-            accountData = data;
-            if (accountData) {
-                return generateUniqueID();
-            }
-        })
-        .then(() => {
-            // Comprobamos si los datos ingresados son correctos
-            const {dataError} = validarDatos(req.body);
-            if (dataError) {
-                return res.status(400).send({message: dataError.details[0].message});
-            }
+    accountModel.findOne({accountName: req.body.accountName})
+        .then(existingAccount => {
+            if (existingAccount) {
+                res.status(409).send({message: 'El usuario ya tiene una cuenta de ahorros con el mismo nombre.'});
+            } else {
+                generateUniqueID()
+                    .then(data => {
+                        accountData = data;
+                        if (accountData) {
+                            return generateUniqueID();
+                        }
+                    })
+                    .then(() => {
+                        // Comprobamos si los datos ingresados son correctos
+                        const {dataError} = validarDatos(req.body);
+                        if (dataError) {
+                            return res.status(400).send({message: dataError.details[0].message});
+                        }
 
-            return new accountModel({...req.body}).save();
-        })
-        .then(() => {
-            res.status(201).send({message: 'Cuenta de ahorros creada con éxito...'});
+                        return new accountModel({...req.body}).save();
+                    })
+                    .then(() => {
+                        res.status(201).send({message: 'Cuenta de ahorros creada con éxito...'});
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        res.status(500).send({message: 'Error interno de servidor...'});
+                    });
+            }
         })
         .catch(error => {
             console.error(error);
-            res.status(500).send({message: 'Error interno de servidor...'});
+            res.status(500).send({message: 'Error interno de servidor.'});
         });
 })
 
@@ -126,6 +138,27 @@ router.post('/transferMoney', async (req, res) => {
         .catch((error) => {
             console.log(error)
         })
+})
+
+router.post('/saveMovementInfo', async (req, res) => {
+    try {
+        const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
+
+        const movementInfo = new movementModel({
+            accountOriginID,
+            accountDestinyID,
+            movementValue,
+            movementDate
+        });
+
+        // Guarda la información del movimiento en la base de datos
+        const savedMovementInfo = await movementInfo.save();
+
+        res.status(201).json(savedMovementInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Error interno de servidor'});
+    }
 })
 
 module.exports = router

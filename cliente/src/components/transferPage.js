@@ -44,7 +44,20 @@ export default function TransferPage() {
             setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/operationsAPI/transferMoney'
             const response = await axios.post(url, data)
-            console.log(response)
+
+            if (response.status === 201) {
+                const movementData = {
+                    accountOriginID: data.accountOriginID,
+                    accountDestinyID: data.accountDestinyID,
+                    movementValue: data.transferValue,
+                    movementDate: new Date().toISOString()
+                }
+
+                const url = 'https://bankapp-backend.onrender.com/operationsAPI/saveMovementInfo'
+                const response = await axios.post(url, movementData)
+                console.log(response)
+            }
+
             navigate("/auth/platform")
         } catch (error) {
             setResMessage({message: error.response.data.message})

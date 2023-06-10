@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
 
             // Encriptamos la contraseña y guardamos los datos
             return bcrypt.genSalt(Number(process.env.SALT))
-                .then(salt => bcrypt.hash(req.body.password, salt))
+                .then(salt => {
+                    bcrypt.hash(req.body.password, salt)
+                })
                 .then(encryptedPass => {
                     return new studentModel({...req.body, password: encryptedPass}).save();
                 })
