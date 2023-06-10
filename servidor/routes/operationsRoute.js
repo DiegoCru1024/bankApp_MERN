@@ -15,7 +15,7 @@ router.post('/createAccount', async (req, res) => {
     accountModel.findOne({accountName: req.body.accountName})
         .then(existingAccount => {
             if (existingAccount) {
-                res.status(409).send({message: 'El usuario ya tiene una cuenta de ahorros con el mismo nombre.'});
+                return res.status(401).send({message: 'El usuario ya tiene una cuenta de ahorros con el mismo nombre.'})
             } else {
                 generateUniqueID()
                     .then(data => {

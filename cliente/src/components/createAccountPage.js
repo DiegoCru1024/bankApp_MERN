@@ -5,6 +5,7 @@ import axios from "axios";
 import './css/projectStyles.css'
 
 export default function CreateAccountPage() {
+    const [resMessage, setResMessage] = useState({message: ''})
     const storedModel = localStorage.getItem('studentData')
     const parsedModel = JSON.parse(storedModel)
 
@@ -47,6 +48,7 @@ export default function CreateAccountPage() {
             console.log(res.message);
         } catch (error) {
             setButtonDisabled(false)
+            setResMessage({message: error.response.data.message})
         }
     };
 
@@ -75,6 +77,8 @@ export default function CreateAccountPage() {
                         <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Crear Cuenta
                         </button>
                     </form>
+
+                    {resMessage.message && <div className="error-message">{resMessage.message}</div>}
                 </div>
             </div>
         </main>
