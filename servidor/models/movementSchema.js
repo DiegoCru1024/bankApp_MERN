@@ -13,8 +13,8 @@ const movementModel = mongoose.model("movimiento", movementSchema)
 
 const validarDatosMovimiento = (data) => {
     const Schema = joi.object({
-        accountOriginID: joi.number().required().label('AccountOriginID'),
-        accountDesnityID: joi.number().required().label('AccountDestinyID'),
+        ownerOriginID: joi.number().required().label('AccountOriginID'),
+        ownerDesnityID: joi.number().required().label('AccountDestinyID'),
         movementValue: joi.number().required().label('Movement Value'),
         movementCurrencyType: joi.string().required().label('Movement Currency Type'),
         movementDate: joi.date().required().label('Movement Date')

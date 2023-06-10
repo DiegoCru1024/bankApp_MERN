@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {accountModel, validarDatos, generarID} = require('../models/accountSchema')
+const {movementModel, validarDatosMovimiento} = require('../models/movementSchema')
 
 router.post('/createAccount', async (req, res) => {
     // Generamos un ID único para la cuenta
@@ -129,7 +130,38 @@ router.post('/transferMoney', async (req, res) => {
 })
 
 router.post('/saveMovementInfo', async (req, res) => {
+    try {
+        const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
 
+        // Crea una nueva instancia del modelo MovementInfo con los datos proporcionados
+        const movementInfo = new movementModel({
+            accountOriginID,
+            accountDestinyID,
+            movementValue,
+            movementDate
+        });
+
+        // Guarda la información del movimiento en la base de datos
+        const savedMovementInfo = await movementInfo.save();
+
+        res.status(201).json(savedMovementInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Error interno de servidor'});
+    }
+})
+
+router.get('/getLastMovements', async (req, res) => {
+    const studentCode = req.query.studentCode;
+
+    movementModel.find({$or: [{ownerOriginID: studentCode.toString()}, {ownerDetinyID: studentCode.toString()}]})
+        .then(movementModels => {
+            res.json(movementModels);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send({message: 'Error interno de servidor...'});
+        });
 })
 
 module.exports = router
