@@ -8,6 +8,7 @@ import AccountPage from "./components/accountPage";
 import AdminPage from "./components/adminPage";
 import CreateAccountPage from "./components/createAccountPage";
 import TransferPage from "./components/transferPage";
+import MovementPage from "./components/movementPage";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
 
                 <Route path="/auth/accountCreate" element={<CreateAccountPage/>}/>
                 <Route path="/auth/transferMoney" element={<TransferPage/>}/>
+                <Route path="/auth/lastMovements" element={<MovementPage/>}/>
             </Routes>
         </BrowserRouter>
     );

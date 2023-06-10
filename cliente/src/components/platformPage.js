@@ -50,7 +50,7 @@ export default function PlatformPage() {
                         <Link to="/auth/transferMoney">Transferencia</Link>
                         <Link to="/auth/platform">Depósito o Retiro</Link>
                         <Link to="/auth/platform">Estado de Cuenta</Link>
-                        <Link to="/auth/platform">Ultimos movimientos</Link>
+                        <Link to="/auth/lastMovements">Ultimos movimientos</Link>
                         <Link to="/auth/platform">Prestamos</Link>
                     </div>
                 </div>
