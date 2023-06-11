@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {accountModel} = require('../models/accountSchema')
 const {movementModel} = require('../models/movementSchema')
 
 router.post('/', async (req, res) => {
