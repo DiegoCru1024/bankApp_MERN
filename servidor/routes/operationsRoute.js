@@ -130,34 +130,33 @@ router.post('/transferMoney', async (req, res) => {
 })
 
 router.post('/saveMovementInfo', async (req, res) => {
-    try {
-        const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
-        let movementCurrencyType
+    const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
+    
+    accountModel.findOne({accountID: accountOriginID.toString()})
+        .then(originAccount => {
+            if (!originAccount) {
+                throw new Error('Cuenta de origen no encontrada');
+            }
 
-        accountModel.findOne({accountID: req.body.accountOriginID.toString()})
-            .then(originAccount => {
-                movementCurrencyType = originAccount.accountCurrencyType
-            })
-            .catch(error => {
-                console.log(error)
-            })
+            const movementCurrencyType = originAccount.accountCurrencyType;
 
-        const movementInfo = new movementModel({
-            accountOriginID,
-            accountDestinyID,
-            movementValue,
-            movementCurrencyType,
-            movementDate
+            const movementInfo = new movementModel({
+                accountOriginID,
+                accountDestinyID,
+                movementValue,
+                movementCurrencyType,
+                movementDate
+            });
+
+            return movementInfo.save();
+        })
+        .then(savedMovementInfo => {
+            res.status(201).json(savedMovementInfo);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).json({message: 'Error interno de servidor'});
         });
-
-        // Guarda la información del movimiento en la base de datos
-        const savedMovementInfo = await movementInfo.save();
-
-        res.status(201).json(savedMovementInfo);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({message: 'Error interno de servidor'});
-    }
 })
 
 router.get('/getLastMovements', async (req, res) => {
