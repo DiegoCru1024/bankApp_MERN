@@ -132,12 +132,21 @@ router.post('/transferMoney', async (req, res) => {
 router.post('/saveMovementInfo', async (req, res) => {
     try {
         const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
+        let movementCurrencyType
 
-        // Crea una nueva instancia del modelo MovementInfo con los datos proporcionados
+        accountModel.findOne({accountID: req.body.accountOriginID.toString()})
+            .then(originAccount => {
+                movementCurrencyType = originAccount.accountCurrencyType
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
         const movementInfo = new movementModel({
             accountOriginID,
             accountDestinyID,
             movementValue,
+            movementCurrencyType,
             movementDate
         });
 
@@ -154,7 +163,7 @@ router.post('/saveMovementInfo', async (req, res) => {
 router.get('/getLastMovements', async (req, res) => {
     const studentCode = req.query.studentCode;
 
-    movementModel.find({$or: [{ownerOriginID: studentCode.toString()}, {ownerDetinyID: studentCode.toString()}]})
+    movementModel.find({$or: [{accountOriginID: studentCode.toString()}, {accountDetinyID: studentCode.toString()}]})
         .then(movementModels => {
             res.json(movementModels);
         })
