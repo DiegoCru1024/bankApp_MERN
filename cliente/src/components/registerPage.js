@@ -73,7 +73,9 @@ export default function RegisterPage() {
                                    value={data.studentCode} name="studentCode"></input><br></br>
                             {error && <div>{error}</div>}
                             <br></br>
-                            <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Registrarse</button>
+                            <button className="main-button-style" type="submit"
+                                    disabled={isButtonDisabled}>Registrarse
+                            </button>
                         </form>
                     </div>
                     <p>¿Ya estas registrado?</p>
