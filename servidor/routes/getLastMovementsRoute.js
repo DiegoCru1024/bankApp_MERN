@@ -3,29 +3,15 @@ const {accountModel} = require('../models/accountSchema')
 const {movementModel} = require('../models/movementSchema')
 
 router.get('/', async (req, res) => {
-    const studentCode = req.query.studentCode;
+    const accountID = req.query.accountID;
 
-    accountModel.find({ownerUserID: studentCode.toString()})
-        .then(accounts => {
-            const accountIDs = accounts.map(account => account.accountID);
-
-            movementModel.find({
-                $or: [
-                    {accountOriginID: {$in: accountIDs}},
-                    {accountDetinyID: {$in: accountIDs}}
-                ]
-            })
-                .then(movements => {
-                    res.json(movements);
-                })
-                .catch(error => {
-                    console.error(error);
-                    res.status(500).json({message: 'Error interno de servidor'});
-                });
+    accountModel.find({accountID: accountID.toString()})
+        .then(accountModels => {
+            res.json(accountModels);
         })
         .catch(error => {
             console.error(error);
-            res.status(500).json({message: 'Error interno de servidor'});
+            res.status(500).send({message: 'Error interno de servidor...'});
         });
 })
 
