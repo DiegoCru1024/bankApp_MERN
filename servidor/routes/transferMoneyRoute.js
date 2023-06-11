@@ -1,56 +1,7 @@
 const router = require('express').Router()
-const {accountModel, validarDatos, generarID} = require('../models/accountSchema')
-const {movementModel, validarDatosMovimiento} = require('../models/movementSchema')
+const {accountModel} = require("../models/accountSchema");
 
-router.post('/createAccount', async (req, res) => {
-    // Generamos un ID único para la cuenta
-    let accountData;
-    let generatedID;
-
-    function generateUniqueID() {
-        generatedID = generarID();
-        return accountModel.findOne({accountID: generatedID.toString()});
-    }
-
-    generateUniqueID()
-        .then(data => {
-            accountData = data;
-            if (accountData) {
-                return generateUniqueID();
-            }
-        })
-        .then(() => {
-            // Comprobamos si los datos ingresados son correctos
-            const {dataError} = validarDatos(req.body);
-            if (dataError) {
-                return res.status(400).send({message: dataError.details[0].message});
-            }
-
-            return new accountModel({...req.body}).save();
-        })
-        .then(() => {
-            res.status(201).send({message: 'Cuenta de ahorros creada con éxito...'});
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).send({message: 'Error interno de servidor...'});
-        });
-})
-
-router.get('/getAccounts', async (req, res) => {
-    const studentCode = req.query.studentCode;
-
-    accountModel.find({ownerUserID: studentCode.toString()})
-        .then(accountModels => {
-            res.json(accountModels);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).send({message: 'Error interno de servidor...'});
-        });
-})
-
-router.post('/transferMoney', async (req, res) => {
+router.post('/', async (req, res) => {
     accountModel.findOne({accountID: req.body.accountOriginID.toString()})
         .then((originAccount) => {
             //Comprobamos que la cuenta ingresada exista
@@ -127,49 +78,6 @@ router.post('/transferMoney', async (req, res) => {
         .catch((error) => {
             console.log(error)
         })
-})
-
-router.post('/saveMovementInfo', async (req, res) => {
-    const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
-    
-    accountModel.findOne({accountID: accountOriginID.toString()})
-        .then(originAccount => {
-            if (!originAccount) {
-                throw new Error('Cuenta de origen no encontrada');
-            }
-
-            const movementCurrencyType = originAccount.accountCurrencyType;
-
-            const movementInfo = new movementModel({
-                accountOriginID,
-                accountDestinyID,
-                movementValue,
-                movementCurrencyType,
-                movementDate
-            });
-
-            return movementInfo.save();
-        })
-        .then(savedMovementInfo => {
-            res.status(201).json(savedMovementInfo);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({message: 'Error interno de servidor'});
-        });
-})
-
-router.get('/getLastMovements', async (req, res) => {
-    const studentCode = req.query.studentCode;
-
-    movementModel.find({$or: [{accountOriginID: studentCode.toString()}, {accountDetinyID: studentCode.toString()}]})
-        .then(movementModels => {
-            res.json(movementModels);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).send({message: 'Error interno de servidor...'});
-        });
 })
 
 module.exports = router

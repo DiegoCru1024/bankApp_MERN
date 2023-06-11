@@ -8,7 +8,11 @@ const express = require('express')
 const mongoDB = require('./databaseDriver')
 const loginRoute = require('./routes/loginRoute')
 const registerRoute = require('./routes/registerRoute')
-const operationsRoute = require('./routes/operationsRoute')
+const createAccountRoute = require('./routes/createAccountRoute')
+const getAccountsRoute = require('./routes/getAccountsRoute')
+const transferMoneyRoute = require('./routes/transferMoneyRoute')
+const saveMovementRoute = require('./routes/saveMovementRoute')
+const getLastMovementsRoute = require('./routes/getLastMovementsRoute')
 const app = express()
 
 
@@ -31,7 +35,11 @@ app.use(cors(corsOptions))
 //Rutas
 app.use('/loginAPI', loginRoute)
 app.use('/registerAPI', registerRoute)
-app.use('/operationsAPI', operationsRoute)
+app.use('/operationsAPI/createAccount', createAccountRoute)
+app.use('/operationsAPI/getAccounts', getAccountsRoute)
+app.use('/operationsAPI/transferMoney', transferMoneyRoute)
+app.use('/operationsAPI/saveMovementInfo', saveMovementRoute)
+app.use('/operationsAPI/getLastMovements', getLastMovementsRoute)
 
 //Iniciando servidor
 app.listen(process.env.PORT, () => {
