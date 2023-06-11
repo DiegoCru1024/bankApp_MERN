@@ -58,7 +58,7 @@ export default function MovementPage() {
     };
 
     const detectarCambio = (event) => {
-        const {name, value} = event.target;
+        const value = event.target;
         setSelectedAccountID(value);
     };
 
