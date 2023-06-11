@@ -94,7 +94,7 @@ export default function MovementPage() {
                         {movements.map((movement, index) => (
                             <div key={movement.accountID} className="account">
                                 <h2>Monto de
-                                    transferencia: {`${movement.accountCurrencyType} ${movement.accountBalance}`}</h2>
+                                    transferencia: {`${movement.movementCurrencyType} ${movement.movementValue}`}</h2>
                                 <p>
                                     Origen: {movement.accountOriginID} - Destino: {movement.accountDestinyID}
                                 </p>
