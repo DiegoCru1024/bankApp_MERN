@@ -22,7 +22,7 @@ mongoDB()
 //Configuración de Express y CORS
 app.disable("x-powered-by")
 const corsOptions = {
-    origin: 'https://www.viabcf.tech',
+    origin: '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
