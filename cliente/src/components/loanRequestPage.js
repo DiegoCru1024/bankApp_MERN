@@ -16,7 +16,7 @@ export default function LoanRequestPage() {
         studentName: parsedModel.firstName + " " + parsedModel.lastName,
         loanValue: -1,
         loanFeeRate: -1,
-        loanJustification: 'ASD',
+        loanJustification: '',
         loanRequestState: 'Pendiente',
         loanSubmitDate: Date.now(),
         destinyAccountID: -1

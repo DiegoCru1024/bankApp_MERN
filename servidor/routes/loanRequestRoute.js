@@ -5,6 +5,10 @@ router.post('/', (req, res) => {
     const studentCode = req.body.studentCode;
     let hasExistingRequest = false;
 
+    if (req.body.loanValue < 0 || req.body.loanFeeRate < 0 || req.body.destinyAccountID < 0) {
+        return req.status(400).send({message: 'Complete los datos antes de enviar...'})
+    }
+
     loanRequestModel.findOne({studentCode: studentCode.toString()})
         .then((existingRequest) => {
             if (existingRequest) {
