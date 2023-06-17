@@ -60,7 +60,6 @@ export default function LoanRequestPage() {
         setRequestData(prevState => ({
             ...prevState, [name]: value
         }))
-        console.log(requestData)
     }
 
     const sendRequest = async (e) => {
