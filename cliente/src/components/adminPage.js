@@ -23,7 +23,7 @@ export default function PlatformPage() {
         }
 
         getRequests()
-            .then(res => {
+            .then(() => {
                 console.log('Datos recibidos...');
             })
             .catch(error => {
@@ -92,76 +92,66 @@ export default function PlatformPage() {
                         <div>
                             {activeTab === 1 && (
                                 <div>
-                                    {Array.from(new Set(requests
+                                    {requests
                                         .filter((request) => request.loanRequestState === 'Pendiente')
-                                        .map((request) => request.studentCode)))
-                                        .map((studentCode) => {
-                                            const request = requests.find((req) => req.studentCode === studentCode);
-                                            return (
-                                                <div key={studentCode} className='loan-request-item'>
-                                                    <div className='loan-info'>
-                                                        <h2>Solicitud {request.studentCode}</h2>
-                                                        <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
-                                                            Fecha de solicitud: {request.loanSubmitDate}</p>
-                                                        <p>Justificación: {request.loanJustification}</p>
-                                                    </div>
-                                                    <div className='loan-buttons'>
-                                                        <button
-                                                            onClick={() => updateLoanRequest(request.studentCode, 'Aceptada')}>Aprobar
-                                                        </button>
-                                                        <button
-                                                            onClick={() => updateLoanRequest(request.studentCode, 'Rechazada')}>Rechazar
-                                                        </button>
-                                                    </div>
+                                        .map((request) => (
+                                            <div key={request.studentCode} className='loan-request-item'>
+                                                <div className='loan-info'>
+                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
+                                                        Fecha de solicitud: {request.loanSubmitDate}</p>
+                                                    <p>Justificación: {request.loanJustification}</p>
                                                 </div>
-                                            );
-                                        })}
+                                                <div className='loan-buttons'>
+                                                    <button
+                                                        onClick={() => updateLoanRequest(request.studentCode, 'Aceptada')}>
+                                                        Aprobar
+                                                    </button>
+                                                    <button
+                                                        onClick={() => updateLoanRequest(request.studentCode, 'Rechazada')}>
+                                                        Rechazar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
                                 </div>
                             )}
 
                             {activeTab === 2 && (
                                 <div>
-                                    {Array.from(new Set(requests
+                                    {requests
                                         .filter((request) => request.loanRequestState === 'Aceptada')
-                                        .map((request) => request.studentCode)))
-                                        .map((studentCode) => {
-                                            const request = requests.find((req) => req.studentCode === studentCode);
-                                            return (
-                                                <div key={studentCode} className='loan-request-item'>
-                                                    <div className='loan-info'>
-                                                        <h2>Solicitud {request.studentCode}</h2>
-                                                        <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
-                                                            Fecha de solicitud: {request.loanSubmitDate}</p>
-                                                        <p>Justificación: {request.loanJustification}</p>
-                                                    </div>
+                                        .map((request) => (
+                                            <div key={request.studentCode} className='loan-request-item'>
+                                                <div className='loan-info'>
+                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
+                                                        Fecha de solicitud: {request.loanSubmitDate}</p>
+                                                    <p>Justificación: {request.loanJustification}</p>
                                                 </div>
-                                            );
-                                        })}
+                                            </div>
+                                        ))}
                                 </div>
                             )}
 
                             {activeTab === 3 && (
                                 <div>
-                                    {Array.from(new Set(requests
+                                    {requests
                                         .filter((request) => request.loanRequestState === 'Rechazada')
-                                        .map((request) => request.studentCode)))
-                                        .map((studentCode) => {
-                                            const request = requests.find((req) => req.studentCode === studentCode);
-                                            return (
-                                                <div key={studentCode} className='loan-request-item'>
-                                                    <div className='loan-info'>
-                                                        <h2>Solicitud {request.studentCode}</h2>
-                                                        <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
-                                                            Fecha de solicitud: {request.loanSubmitDate}</p>
-                                                        <p>Justificación: {request.loanJustification}</p>
-                                                    </div>
+                                        .map((request) => (
+                                            <div key={request.studentCode} className='loan-request-item'>
+                                                <div className='loan-info'>
+                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
+                                                        Fecha de solicitud: {request.loanSubmitDate}</p>
+                                                    <p>Justificación: {request.loanJustification}</p>
                                                 </div>
-                                            );
-                                        })}
+                                            </div>
+                                        ))}
                                 </div>
                             )}
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </section>
