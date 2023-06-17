@@ -3,6 +3,25 @@ import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import axios from "axios";
 
+const LoanRequest = ({request, updateLoanRequest}) => (
+    <div className='loan-request-item'>
+        <div className='loan-info'>
+            <h2>Solicitud {request.studentCode}</h2>
+            <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} - Fecha de
+                solicitud: {request.loanSubmitDate}</p>
+            <p>Justificación: {request.loanJustification}</p>
+        </div>
+        <div className='loan-buttons'>
+            <button onClick={() => updateLoanRequest(request.studentCode, 'Aceptada')}>
+                Aprobar
+            </button>
+            <button onClick={() => updateLoanRequest(request.studentCode, 'Rechazada')}>
+                Rechazar
+            </button>
+        </div>
+    </div>
+);
+
 export default function PlatformPage() {
     const navigate = useNavigate();
     const storedModel = localStorage.getItem('studentData');
@@ -11,7 +30,6 @@ export default function PlatformPage() {
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
-        // Verifica si hay un JWT en el almacenamiento
         const jwtToken = localStorage.getItem('token');
 
         if (!jwtToken) {
@@ -69,35 +87,6 @@ export default function PlatformPage() {
         setActiveTab(tabNumber);
     };
 
-    const LoanRequestItem = ({request, updateLoanRequest}) => (
-        <div className='loan-request-item'>
-            <div className='loan-info'>
-                <h2>Solicitud {request.studentCode}</h2>
-                <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} - Fecha de
-                    solicitud: {request.loanSubmitDate}</p>
-                <p>Justificación: {request.loanJustification}</p>
-            </div>
-            <div className='loan-buttons'>
-                <button onClick={() => updateLoanRequest(request.studentCode, 'Aceptada')}>
-                    Aprobar
-                </button>
-                <button onClick={() => updateLoanRequest(request.studentCode, 'Rechazada')}>
-                    Rechazar
-                </button>
-            </div>
-        </div>
-    );
-
-    const LoanRequestList = ({requests, filterBy}) => (
-        <div>
-            {requests
-                .filter((request) => request.loanRequestState === filterBy)
-                .map((request) => (
-                    <LoanRequestItem key={request.studentCode} request={request}/>
-                ))}
-        </div>
-    );
-
     return (
         <main>
             <Header/>
@@ -120,15 +109,51 @@ export default function PlatformPage() {
 
                         <div>
                             {activeTab === 1 && (
-                                <LoanRequestList requests={requests} filterBy="Pendiente"/>
+                                <div>
+                                    {requests
+                                        .filter((request) => request.loanRequestState === 'Pendiente')
+                                        .map((request) => (
+                                            <LoanRequest
+                                                key={request.studentCode}
+                                                request={request}
+                                                updateLoanRequest={updateLoanRequest}
+                                            />
+                                        ))}
+                                </div>
                             )}
 
                             {activeTab === 2 && (
-                                <LoanRequestList requests={requests} filterBy="Aceptada"/>
+                                <div>
+                                    {requests
+                                        .filter((request) => request.loanRequestState === 'Aceptada')
+                                        .map((request) => (
+                                            <div key={request.studentCode} className='loan-request-item'>
+                                                <div className='loan-info'>
+                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
+                                                        Fecha de solicitud: {request.loanSubmitDate}</p>
+                                                    <p>Justificación: {request.loanJustification}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                </div>
                             )}
 
                             {activeTab === 3 && (
-                                <LoanRequestList requests={requests} filterBy="Rechazada"/>
+                                <div>
+                                    {requests
+                                        .filter((request) => request.loanRequestState === 'Rechazada')
+                                        .map((request) => (
+                                            <div key={request.studentCode} className='loan-request-item'>
+                                                <div className='loan-info'>
+                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
+                                                        Fecha de solicitud: {request.loanSubmitDate}</p>
+                                                    <p>Justificación: {request.loanJustification}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                </div>
                             )}
                         </div>
                     </div>
