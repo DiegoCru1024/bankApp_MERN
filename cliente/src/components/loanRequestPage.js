@@ -32,7 +32,7 @@ export default function LoanRequestPage() {
             navigate('/');
         }
 
-        searchAccounts()
+        searchLoanAccounts()
             .then(() => {
                 console.log('Datos recibidos...');
             })
@@ -41,7 +41,7 @@ export default function LoanRequestPage() {
             });
     }, []);
 
-    const searchAccounts = async () => {
+    const searchLoanAccounts = async () => {
         try {
             const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts';
             const response = await axios.get(url, {
