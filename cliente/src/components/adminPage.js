@@ -124,7 +124,7 @@ export default function PlatformPage() {
                                         .map((request) => (
                                             <div key={request.studentCode} className='loan-request-item'>
                                                 <div className='loan-info'>
-                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <h2>Solicitud {request.studentCode} Aceptada</h2>
                                                     <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
                                                         Fecha de solicitud: {request.loanSubmitDate}</p>
                                                     <p>Justificación: {request.loanJustification}</p>
@@ -141,7 +141,7 @@ export default function PlatformPage() {
                                         .map((request) => (
                                             <div key={request.studentCode} className='loan-request-item'>
                                                 <div className='loan-info'>
-                                                    <h2>Solicitud {request.studentCode}</h2>
+                                                    <h2>Solicitud {request.studentCode} Rechazada</h2>
                                                     <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
                                                         Fecha de solicitud: {request.loanSubmitDate}</p>
                                                     <p>Justificación: {request.loanJustification}</p>
