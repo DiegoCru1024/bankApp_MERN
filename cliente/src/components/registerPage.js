@@ -32,15 +32,13 @@ export default function RegisterPage() {
         try {
             setButtonDisabled(true)
             const url = 'https://bankapp-backend.onrender.com/registerAPI';
-            const {data: res} = await axios.post(url, data);
+            const response = await axios.post(url, data);
+            console.log(response)
             navigate("/userLogin");
-            console.log(res.body.message)
         } catch (error) {
             setButtonDisabled(false)
+            setError(error.response.data.message);
             console.log(error)
-            if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setError(error);
-            }
         }
     };
 
@@ -71,7 +69,7 @@ export default function RegisterPage() {
                                    value={data.number} name="number"></input><br></br>
                             <input type="number" placeholder="Código de Estudiante" onChange={detectarCambio} required
                                    value={data.studentCode} name="studentCode"></input><br></br>
-                            {error && <div>{error}</div>}
+                            {error && <div className='error-message'>{error}</div>}
                             <br></br>
                             <button className="main-button-style" type="submit"
                                     disabled={isButtonDisabled}>Registrarse

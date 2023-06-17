@@ -66,9 +66,10 @@ export default function LoanRequestPage() {
         e.preventDefault()
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/loanAPI/requestLoan'
+            const url = 'https://bankapp-backend.onrender.com/loanAPI/loanRequest'
             const response = await axios.post(url, requestData)
             console.log(response)
+            navigate('/auth/platform')
         } catch (error) {
             setButtonDisabled(false)
             console.log(error)
@@ -106,6 +107,7 @@ export default function LoanRequestPage() {
                             <input type='number' name='loanValue' onChange={detectarCambio}/>
                             <p>Cuotas de pago:</p>
                             <select name='loanFeeRate' onChange={detectarCambio}>
+                                <option value={-1}>-- Seleccionar --</option>
                                 <option value={1}>1 cuota</option>
                                 <option value={3}>3 cuotas</option>
                                 <option value={6}>6 cuotas</option>

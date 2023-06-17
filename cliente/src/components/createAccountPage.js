@@ -15,7 +15,7 @@ export default function CreateAccountPage() {
         ownerUserID: parsedModel.studentCode,
         accountName: '',
         accountID: '',
-        accountBalance: '100.25',
+        accountBalance: '100.0',
         accountCurrencyType: 'PEN'
     })
 

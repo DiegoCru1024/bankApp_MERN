@@ -14,6 +14,7 @@ const transferMoneyRoute = require('./routes/transferMoneyRoute')
 const saveMovementRoute = require('./routes/saveMovementRoute')
 const getLastMovementsRoute = require('./routes/getLastMovementsRoute')
 const loanRequestRoute = require('./routes/loanRequestRoute')
+const loanInfoRoute = require('./routes/loanInfoRoute')
 const app = express()
 
 
@@ -24,7 +25,7 @@ mongoDB()
 app.disable("x-powered-by")
 const corsOptions = {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
 };
@@ -41,7 +42,8 @@ app.use('/operationsAPI/getAccounts', getAccountsRoute)
 app.use('/operationsAPI/transferMoney', transferMoneyRoute)
 app.use('/operationsAPI/saveMovementInfo', saveMovementRoute)
 app.use('/operationsAPI/getLastMovements', getLastMovementsRoute)
-app.use('/loanAPI/requestLoan', loanRequestRoute)
+app.use('/loanAPI/loanRequest', loanRequestRoute)
+app.use('/loanAPI/loanInfo', loanInfoRoute)
 
 //Iniciando servidor
 app.listen(process.env.PORT, () => {
