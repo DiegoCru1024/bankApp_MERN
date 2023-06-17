@@ -123,7 +123,7 @@ export default function PlatformPage() {
                                         .filter((request) => request.loanRequestState === 'Aceptada')
                                         .map((request) => (
                                             <div key={request.studentCode} className='loan-request-item'>
-                                                <div className='loan-info' id={request.studentCode}>
+                                                <div className='loan-info' id={'Aceptado'}>
                                                     <h2>Solicitud {request.studentCode}</h2>
                                                     <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
                                                         Fecha de solicitud: {request.loanSubmitDate}</p>
@@ -140,7 +140,7 @@ export default function PlatformPage() {
                                         .filter((request) => request.loanRequestState === 'Rechazada')
                                         .map((request) => (
                                             <div key={request.studentCode} className='loan-request-item'>
-                                                <div className='loan-info' id={request.studentCode}>
+                                                <div className='loan-info' id={'Rechazado'}>
                                                     <h2>Solicitud {request.studentCode}</h2>
                                                     <p>Valor: {request.loanValue} - Cuotas: {request.loanFeeRate} -
                                                         Fecha de solicitud: {request.loanSubmitDate}</p>
