@@ -22,7 +22,7 @@ const Header = () => {
             <div>
                 <ul>
                     <li><Link to="/auth/platform">INICIO</Link></li>
-                    <li><Link to="/auth/operations">OPERACIONES</Link></li>
+                    <li><Link to="/auth/loanInfo">PRESTAMOS</Link></li>
                     <li><Link to="/auth/account">CUENTA</Link></li>
                     {parsedModel.isAdmin ? (
                         <li><Link to="/auth/admin" on>ADMIN</Link></li>

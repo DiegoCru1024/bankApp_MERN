@@ -13,6 +13,7 @@ const getAccountsRoute = require('./routes/getAccountsRoute')
 const transferMoneyRoute = require('./routes/transferMoneyRoute')
 const saveMovementRoute = require('./routes/saveMovementRoute')
 const getLastMovementsRoute = require('./routes/getLastMovementsRoute')
+const loanRequestRoute = require('./routes/loanRequestRoute')
 const app = express()
 
 
@@ -22,7 +23,7 @@ mongoDB()
 //Configuración de Express y CORS
 app.disable("x-powered-by")
 const corsOptions = {
-    origin: 'https://www.viabcf.tech',
+    origin: 'https://www.viabcf.tech/',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
@@ -40,6 +41,7 @@ app.use('/operationsAPI/getAccounts', getAccountsRoute)
 app.use('/operationsAPI/transferMoney', transferMoneyRoute)
 app.use('/operationsAPI/saveMovementInfo', saveMovementRoute)
 app.use('/operationsAPI/getLastMovements', getLastMovementsRoute)
+app.use('/loanAPI/requestLoan', loanRequestRoute)
 
 //Iniciando servidor
 app.listen(process.env.PORT, () => {

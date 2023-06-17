@@ -3,7 +3,8 @@ import MainPage from "./components/mainPage";
 import LoginPage from "./components/loginPage";
 import RegisterPage from "./components/registerPage";
 import PlatformPage from "./components/platformPage";
-import OperationsPage from "./components/operationsPage";
+import LoanInfoPage from "./components/loanInfoPage";
+import LoanRequestPage from "./components/loanRequestPage";
 import AccountPage from "./components/accountPage";
 import AdminPage from "./components/adminPage";
 import CreateAccountPage from "./components/createAccountPage";
@@ -18,7 +19,8 @@ function App() {
                 <Route path="/userLogin" element={<LoginPage/>}/>
                 <Route path="/userRegister" element={<RegisterPage/>}/>
                 <Route path="/auth/platform" element={<PlatformPage/>}/>
-                <Route path="/auth/operations" element={<OperationsPage/>}/>
+                <Route path="/auth/loanInfo" element={<LoanInfoPage/>}/>
+                <Route path="/auth/loanRequest" element={<LoanRequestPage/>}/>
                 <Route path="/auth/account" element={<AccountPage/>}/>
                 <Route path="/auth/admin" element={<AdminPage/>}/>
 

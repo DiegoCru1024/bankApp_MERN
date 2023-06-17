@@ -51,7 +51,7 @@ export default function PlatformPage() {
                         <Link to="/auth/platform">Depósito o Retiro</Link>
                         <Link to="/auth/platform">Estado de Cuenta</Link>
                         <Link to="/auth/lastMovements">Ultimos movimientos</Link>
-                        <Link to="/auth/platform">Prestamos</Link>
+                        <Link to="/auth/loanRequest">Solicitar Prestamo</Link>
                     </div>
                 </div>
                 <div className="platform-accounts">
