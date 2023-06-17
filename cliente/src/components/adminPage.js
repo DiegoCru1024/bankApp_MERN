@@ -91,7 +91,7 @@ export default function PlatformPage() {
 
                         <div>
                             {activeTab === 1 && (
-                                <div>
+                                <div id='pendientes'>
                                     {requests
                                         .filter((request) => request.loanRequestState === 'Pendiente')
                                         .map((request) => (
@@ -118,7 +118,7 @@ export default function PlatformPage() {
                             )}
 
                             {activeTab === 2 && (
-                                <div>
+                                <div id={}>
                                     {requests
                                         .filter((request) => request.loanRequestState === 'Aceptada')
                                         .map((request) => (

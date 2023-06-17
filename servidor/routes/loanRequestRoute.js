@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     const studentCode = req.query.studentCode;
 
-    loanRequestModel.findOne({studentCode: studentCode})
+    loanRequestModel.findOne({studentCode: studentCode.toString()})
         .then(loan => {
             res.json(loan)
         }).catch(error => {
@@ -52,7 +52,7 @@ router.get('/getAllRequests', (req, res) => {
 router.put('/updateRequest', (req, res) => {
     const {studentCode, loanRequestState} = req.body;
 
-    loanRequestModel.findOne({studentCode})
+    loanRequestModel.findOne({studentCode: studentCode.toString()})
         .then((requestToUpdate) => {
             if (!requestToUpdate) {
                 return res.status(404).json({error: 'Solicitud de préstamo no encontrada'});
