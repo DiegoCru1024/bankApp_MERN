@@ -1,14 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from "./headerComponent";
-import axios from "axios";
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import Header from "./headerComponent"
+import axios from "axios"
 import './css/projectStyles.css'
-import {API_URL} from "../config";
+import {API_URL} from "../config"
 
 export default function CreateAccountPage() {
+    // Estado para almacenar el mensaje de respuesta
     const [resMessage, setResMessage] = useState({message: ''})
+
+    // Obtiene los datos almacenados en el localStorage
     const storedModel = localStorage.getItem('studentData')
     const parsedModel = JSON.parse(storedModel)
+
+    // Estado para almacenar los datos del formulario
     const [data, setData] = useState({
         ownerFirstName: parsedModel.firstName,
         ownerLastName: parsedModel.lastName,
@@ -19,18 +24,23 @@ export default function CreateAccountPage() {
         accountCurrencyType: 'PEN'
     })
 
-    const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const navigate = useNavigate();
+    // Estado para habilitar o deshabilitar el botón
+    const [isButtonDisabled, setButtonDisabled] = useState(false)
 
+    // Hook de navegación
+    const navigate = useNavigate()
+
+    // Hook de efecto para verificar el token al cargar el componente
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
-        const jwtToken = localStorage.getItem('token');
+        const jwtToken = localStorage.getItem('token')
 
         if (!jwtToken) {
             navigate('/')
         }
     }, [navigate])
 
+    // Función para detectar el cambio en los campos del formulario
     const detectarCambio = (event) => {
         const {name, value} = event.target
         setData(prevState => ({
@@ -38,19 +48,20 @@ export default function CreateAccountPage() {
         }))
     }
 
+    // Función para enviar los datos del formulario
     const enviarDatos = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
             setButtonDisabled(true)
-            const url = `${API_URL}/operationsAPI/createAccount`;
-            const {data: res} = await axios.post(url, data);
-            navigate("/auth/platform");
-            console.log(res.message);
+            const url = `${API_URL}/operationsAPI/createAccount`
+            const {data: res} = await axios.post(url, data)
+            navigate('/auth/platform')
+            console.log(res.message)
         } catch (error) {
             setButtonDisabled(false)
             setResMessage({message: error.response.data.message})
         }
-    };
+    }
 
     return (
         <main>
@@ -82,6 +93,6 @@ export default function CreateAccountPage() {
                 </div>
             </div>
         </main>
-    );
+    )
 }
 

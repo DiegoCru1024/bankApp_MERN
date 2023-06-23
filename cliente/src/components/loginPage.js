@@ -1,16 +1,24 @@
-import {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
+import {useState} from 'react'
+import {Link, useNavigate} from "react-router-dom"
+import axios from "axios"
 import logo from './img/logo.png'
 import './css/projectStyles.css'
-import {API_URL} from "../config";
+import {API_URL} from "../config"
 
 export default function LoginPage() {
-    const [isButtonDisabled, setButtonDisabled] = useState(false);
+    // Estado para habilitar o deshabilitar el botón
+    const [isButtonDisabled, setButtonDisabled] = useState(false)
+
+    // Estado para almacenar los datos del formulario (email y password)
     const [data, setData] = useState({email: '', password: ''})
+
+    // Estado para almacenar el mensaje de respuesta
     const [resMessage, setResMessage] = useState({message: ''})
+
+    // Hook de navegación
     const navigate = useNavigate()
 
+    // Función para detectar el cambio en los campos del formulario
     const detectarCambio = (event) => {
         const {name, value} = event.target
         setData(prevState => ({
@@ -19,20 +27,21 @@ export default function LoginPage() {
         }))
     }
 
+    // Función para enviar los datos del formulario
     const enviarDatos = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
             setButtonDisabled(true)
             const url = `${API_URL}/loginAPI`
             const {data: res} = await axios.post(url, data)
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))
-            navigate("/auth/platform");
+            navigate("/auth/platform")
         } catch (error) {
             setButtonDisabled(false)
             setResMessage({message: error.response.data.message})
         }
-    };
+    }
 
     return (
         <section className="login-main-container">
@@ -69,5 +78,5 @@ export default function LoginPage() {
                 <Link to="/" className="login-return-button">↶ Volver a la pagina principal</Link>
             </div>
         </section>
-    );
+    )
 }

@@ -10,9 +10,11 @@ import AdminPage from "./components/adminPage";
 import CreateAccountPage from "./components/createAccountPage";
 import TransferPage from "./components/transferPage";
 import MovementPage from "./components/movementPage";
+import AccountInfoPage from "./components/accountInfoPage";
 
 function App() {
     return (
+        // Utiliza BrowserRouter para habilitar el enrutamiento en la aplicación
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage/>}/>
@@ -23,10 +25,10 @@ function App() {
                 <Route path="/auth/loanRequest" element={<LoanRequestPage/>}/>
                 <Route path="/auth/account" element={<AccountPage/>}/>
                 <Route path="/auth/admin" element={<AdminPage/>}/>
-
                 <Route path="/auth/accountCreate" element={<CreateAccountPage/>}/>
                 <Route path="/auth/transferMoney" element={<TransferPage/>}/>
                 <Route path="/auth/lastMovements" element={<MovementPage/>}/>
+                <Route path="/auth/accountInfo" element={<AccountInfoPage/>}/>
             </Routes>
         </BrowserRouter>
     );

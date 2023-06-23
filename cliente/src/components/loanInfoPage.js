@@ -3,8 +3,7 @@ import Header from "./headerComponent";
 export default function LoanInfoPage() {
 
 
-
-    return(
+    return (
         <main>
             <Header/>
 

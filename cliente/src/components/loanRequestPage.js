@@ -1,17 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from "./headerComponent";
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import Header from "./headerComponent"
 import './css/projectStyles.css'
-import axios from "axios";
-import {API_URL} from "../config";
+import axios from "axios"
+import {API_URL} from "../config"
 
 export default function LoanRequestPage() {
-    const storedModel = localStorage.getItem('studentData');
-    const parsedModel = JSON.parse(storedModel);
+    // Obtiene los datos almacenados en el localStorage
+    const storedModel = localStorage.getItem('studentData')
+    const parsedModel = JSON.parse(storedModel)
 
-    const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const [accounts, setAccounts] = useState([]);
+    // Estado para habilitar o deshabilitar el botón
+    const [isButtonDisabled, setButtonDisabled] = useState(false)
+
+    // Estado para almacenar las cuentas del usuario
+    const [accounts, setAccounts] = useState([])
+
+    // Estado para almacenar el mensaje de error
     const [error, setError] = useState("")
+
+    // Estado para almacenar los datos de la solicitud de préstamo
     const [requestData, setRequestData] = useState({
         studentCode: parsedModel.studentCode,
         studentName: parsedModel.firstName + " " + parsedModel.lastName,
@@ -23,11 +31,13 @@ export default function LoanRequestPage() {
         destinyAccountID: -1
     })
 
-    const navigate = useNavigate();
+    // Hook de navegación
+    const navigate = useNavigate()
 
+    // Hook de efecto para cargar las cuentas y verificar el token al cargar el componente
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
-        const jwtToken = localStorage.getItem('token');
+        const jwtToken = localStorage.getItem('token')
 
         if (!jwtToken) {
             navigate('/')
@@ -35,27 +45,28 @@ export default function LoanRequestPage() {
 
         const searchAccountsRequest = async () => {
             try {
-                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const url = `${API_URL}/operationsAPI/getAccounts`
                 const response = await axios.get(url, {
                     params: {
                         studentCode: parsedModel.studentCode
                     }
-                });
-                setAccounts(response.data);
+                })
+                setAccounts(response.data)
             } catch (error) {
-                console.error(error);
+                console.error(error)
             }
-        };
+        }
 
         searchAccountsRequest()
             .then(() => {
-                console.log('Datos recibidos...');
+                console.log('Datos recibidos...')
             })
             .catch((error) => {
-                console.log(error);
-            });
-    }, [navigate, parsedModel.studentCode]);
+                console.log(error)
+            })
+    }, [navigate, parsedModel.studentCode])
 
+    // Función para detectar el cambio en los campos del formulario de solicitud de préstamo
     const detectarCambio = (event) => {
         const {name, value} = event.target
         setRequestData(prevState => ({
@@ -63,6 +74,7 @@ export default function LoanRequestPage() {
         }))
     }
 
+    // Función para enviar la solicitud de préstamo
     const sendRequest = async (e) => {
         e.preventDefault()
         try {
@@ -77,6 +89,7 @@ export default function LoanRequestPage() {
             setError(error.response.data.message)
         }
     }
+
 
     return (
         <main>
@@ -125,6 +138,6 @@ export default function LoanRequestPage() {
                 </div>
             </div>
         </main>
-    );
+    )
 }
 

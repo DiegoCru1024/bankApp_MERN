@@ -1,74 +1,86 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from "./headerComponent";
-import axios from "axios";
-import { API_URL } from '../config.js';
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import Header from "./headerComponent"
+import axios from "axios"
+import {API_URL} from '../config.js'
 
 export default function PlatformPage() {
-    const navigate = useNavigate();
-    const storedModel = localStorage.getItem('studentData');
-    const parsedModel = JSON.parse(storedModel);
+    // Hook de navegación
+    const navigate = useNavigate()
 
-    const [requests, setRequests] = useState([]);
+    // Obtiene los datos almacenados en el localStorage
+    const storedModel = localStorage.getItem('studentData')
+    const parsedModel = JSON.parse(storedModel)
 
+    // Estado para almacenar las solicitudes de préstamo
+    const [requests, setRequests] = useState([])
+
+    // Hook de efecto para verificar el token y el rol del usuario al cargar el componente
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
-        const jwtToken = localStorage.getItem('token');
+        const jwtToken = localStorage.getItem('token')
 
         if (!jwtToken) {
-            navigate('/');
+            navigate('/')
         }
 
+        // Verifica si el usuario es un administrador
         if (!parsedModel.isAdmin) {
-            navigate('/auth/platform');
+            navigate('/auth/platform')
         }
 
+        // Obtiene las solicitudes de préstamo
         getRequests()
             .then(() => {
-                console.log('Datos recibidos...');
+                console.log('Datos recibidos...')
             })
             .catch(error => {
-                console.log(error);
-            });
-    }, [navigate, parsedModel.isAdmin]);
+                console.log(error)
+            })
+    }, [navigate, parsedModel.isAdmin])
 
+    // Función para obtener las solicitudes de préstamo
     const getRequests = async () => {
         try {
-            const url = `${API_URL}/loanAPI/loanRequest/getAllRequests`;
-            const response = await axios.get(url);
-            setRequests(response.data);
+            const url = `${API_URL}/loanAPI/loanRequest/getAllRequests`
+            const response = await axios.get(url)
+            setRequests(response.data)
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
-    };
+    }
 
+    // Función para actualizar el estado de una solicitud de préstamo
     const updateLoanRequest = async (studentCode, newLoanRequestState) => {
         try {
-            const url = `${API_URL}/loanAPI/loanRequest/updateRequest`;
+            const url = `${API_URL}/loanAPI/loanRequest/updateRequest`
             const data = {
                 studentCode: studentCode,
                 loanRequestState: newLoanRequestState
-            };
-            const response = await axios.put(url, data);
-            console.log(response.data);
+            }
+            const response = await axios.put(url, data)
+            console.log(response.data)
 
+            // Vuelve a obtener las solicitudes de préstamo actualizadas
             getRequests()
                 .then(() => {
-                    console.log('Datos recibidos...');
+                    console.log('Datos recibidos...')
                 })
                 .catch(error => {
-                    console.log(error);
-                });
+                    console.log(error)
+                })
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
-    };
+    }
 
-    const [activeTab, setActiveTab] = useState(1);
+    // Estado para almacenar la pestaña activa
+    const [activeTab, setActiveTab] = useState(1)
 
+    // Función para manejar el clic en una pestaña
     const handleTabClick = (tabNumber) => {
-        setActiveTab(tabNumber);
-    };
+        setActiveTab(tabNumber)
+    }
 
     return (
         <main>
@@ -157,5 +169,5 @@ export default function PlatformPage() {
                 </div>
             </section>
         </main>
-    );
+    )
 }

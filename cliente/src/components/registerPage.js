@@ -1,11 +1,12 @@
-import {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
+import {useState} from 'react'
+import {Link, useNavigate} from "react-router-dom"
+import axios from "axios"
 import logo from './img/logo.png'
 import './css/projectStyles.css'
-import {API_URL} from "../config";
+import {API_URL} from "../config"
 
 export default function RegisterPage() {
+    // Estado para almacenar los datos del formulario de registro
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
@@ -16,10 +17,16 @@ export default function RegisterPage() {
         isAdmin: false
     })
 
-    const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+    // Estado para deshabilitar el botón de envío
+    const [isButtonDisabled, setButtonDisabled] = useState(false)
 
+    // Estado para almacenar el mensaje de error
+    const [error, setError] = useState("")
+
+    // Hook de navegación
+    const navigate = useNavigate()
+
+    // Función para detectar el cambio en los campos de entrada
     const detectarCambio = (event) => {
         const {name, value} = event.target
         setData(prevState => ({
@@ -28,20 +35,22 @@ export default function RegisterPage() {
         }))
     }
 
+    // Función para enviar los datos del formulario
     const enviarDatos = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
             setButtonDisabled(true)
-            const url = `${API_URL}/registerAPI`;
-            const response = await axios.post(url, data);
+            const url = `${API_URL}/registerAPI`
+            const response = await axios.post(url, data)
             console.log(response)
-            navigate("/userLogin");
+            navigate("/userLogin")
         } catch (error) {
             setButtonDisabled(false)
-            setError(error.response.data.message);
+            setError(error.response.data.message)
             console.log(error)
         }
-    };
+    }
+
 
     return (
 
@@ -86,5 +95,5 @@ export default function RegisterPage() {
                 <Link to="/" className="login-return-button">↶ Volver a la pagina principal</Link>
             </div>
         </section>
-    );
+    )
 }

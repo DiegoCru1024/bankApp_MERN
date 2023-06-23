@@ -1,21 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import Header from './headerComponent'
-import axios from 'axios'
-import {API_URL} from "../config"
+import Header from "./headerComponent";
+import React, {useEffect, useState} from "react";
+import {API_URL} from "../config";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
-export default function MovementPage() {
+export default function AccountInfoPage() {
     // Hook de navegación
     const navigate = useNavigate()
 
     // Estado para almacenar las cuentas
     const [accounts, setAccounts] = useState([])
-
-    // Estado para almacenar los movimientos
-    const [movements, setMovements] = useState([])
-
-    // Estado para almacenar el mensaje de error
-    const [error, setError] = useState('')
 
     // Obtener el modelo almacenado en el almacenamiento local
     const storedModel = localStorage.getItem('studentData')
@@ -35,7 +29,7 @@ export default function MovementPage() {
         }
 
         // Función para buscar las cuentas del usuario
-        const searchAccounts = async () => {
+        const searchAccountsInfo = async () => {
             try {
                 const url = `${API_URL}/operationsAPI/getAccounts`
                 const response = await axios.get(url, {
@@ -50,7 +44,7 @@ export default function MovementPage() {
         }
 
         // Llamar a la función de búsqueda de cuentas
-        searchAccounts()
+        searchAccountsInfo()
             .then(() => {
                 console.log('Datos recibidos...')
             })
@@ -59,28 +53,15 @@ export default function MovementPage() {
             })
     }, [navigate, parsedModel.studentCode])
 
-    // Función para buscar los últimos movimientos de una cuenta
-    const searchMovements = async () => {
-        try {
-            const url = `${API_URL}/operationsAPI/getLastMovements`
-            const response = await axios.get(url, {
-                params: {
-                    accountID: selectedAccountID,
-                },
-            })
-            setMovements(response.data)
-            setError('')
-        } catch (error) {
-            setMovements([])
-            setError(error.response.data.message)
-            console.error(error)
-        }
-    }
-
     // Función para detectar el cambio en la selección de cuenta
     const detectarCambio = (event) => {
         const value = event.target.value
         setSelectedAccountID(value)
+    }
+
+    //Función para generar el estado de cuenta
+    const generateAccountInfo = () => {
+        console.log('Generar')
     }
 
     return (
@@ -88,7 +69,7 @@ export default function MovementPage() {
             <Header/>
             <div className="create-account-main-container">
                 <div className="create-account-menu">
-                    <h1>Ultimos Movimientos</h1>
+                    <h1>Estado de cuenta</h1>
                     <select
                         className="combobox-movement"
                         title="origin"
@@ -107,25 +88,7 @@ export default function MovementPage() {
                             </option>
                         ))}
                     </select>
-                    <button className="main-button-style" onClick={searchMovements}>
-                        Buscar
-                    </button>
-
-                    <div className="movements-container">
-                        {movements.map((movement) => (
-                            <div key={movement.accountID} className="movement">
-                                <p>
-                                    <span>Monto de movimiento: </span>{`${movement.movementCurrencyType} ${movement.movementValue}`}
-                                </p>
-                                <p><span>Tipo de movimiento: </span>{movement.movementType}</p>
-                                <p>
-                                    <span>Origen:s</span> {movement.accountOriginID} - <span>Destino:</span> {movement.accountDestinyID}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {error && <div className='error-message'>{error}</div>}
+                    <button className="main-button-style" onClick={generateAccountInfo}>Generar</button>
                 </div>
             </div>
         </main>

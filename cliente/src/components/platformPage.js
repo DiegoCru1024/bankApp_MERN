@@ -1,46 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import Header from "./headerComponent";
+import React, {useEffect, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import Header from "./headerComponent"
 import './css/projectStyles.css'
-import axios from "axios";
-import {API_URL} from "../config";
+import axios from "axios"
+import {API_URL} from "../config"
 
 export default function PlatformPage() {
-    const storedModel = localStorage.getItem('studentData');
-    const parsedModel = JSON.parse(storedModel);
-    const [accounts, setAccounts] = useState([]);
-    const navigate = useNavigate();
+    // Obtener el modelo almacenado en el almacenamiento local
+    const storedModel = localStorage.getItem('studentData')
+
+    // Analizar el modelo almacenado en formato JSON
+    const parsedModel = JSON.parse(storedModel)
+
+    // Estado para almacenar las cuentas
+    const [accounts, setAccounts] = useState([])
+
+    // Hook de navegación
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
-        const jwtToken = localStorage.getItem('token');
+        const jwtToken = localStorage.getItem('token')
 
         if (!jwtToken) {
-            navigate('/');
+            navigate('/')
         }
 
+        // Función para buscar las cuentas en la plataforma
         const searchAccountsPlatform = async () => {
             try {
-                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const url = `${API_URL}/operationsAPI/getAccounts`
                 const response = await axios.get(url, {
                     params: {
                         studentCode: parsedModel.studentCode
                     }
-                });
-                setAccounts(response.data);
+                })
+                setAccounts(response.data)
             } catch (error) {
-                console.error(error);
+                console.error(error)
             }
-        };
+        }
 
+        // Llamar a la función de búsqueda de cuentas en la plataforma
         searchAccountsPlatform()
             .then(() => {
-                console.log('Datos recibidos...');
+                console.log('Datos recibidos...')
             })
             .catch((error) => {
-                console.log(error);
-            });
-    }, [navigate, parsedModel.studentCode]);
+                console.log(error)
+            })
+    }, [navigate, parsedModel.studentCode])
 
     return (
         <main>
@@ -52,7 +61,7 @@ export default function PlatformPage() {
                         <Link to="/auth/accountCreate">Crear cuenta de ahorros</Link>
                         <Link to="/auth/transferMoney">Transferencia</Link>
                         <Link to="/auth/platform">Depósito o Retiro</Link>
-                        <Link to="/auth/platform">Estado de Cuenta</Link>
+                        <Link to="/auth/accountInfo">Estado de Cuenta</Link>
                         <Link to="/auth/lastMovements">Ultimos movimientos</Link>
                         <Link to="/auth/loanRequest">Solicitar Prestamo</Link>
                     </div>
@@ -70,6 +79,6 @@ export default function PlatformPage() {
                 </div>
             </div>
         </main>
-    );
+    )
 }
 
