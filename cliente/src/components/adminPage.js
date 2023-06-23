@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import axios from "axios";
+import { API_URL } from '../config.js';
 
 export default function PlatformPage() {
     const navigate = useNavigate();
@@ -29,11 +30,11 @@ export default function PlatformPage() {
             .catch(error => {
                 console.log(error);
             });
-    }, []);
+    }, [navigate, parsedModel.isAdmin]);
 
     const getRequests = async () => {
         try {
-            const url = 'https://bankapp-backend.onrender.com/loanAPI/loanRequest/getAllRequests';
+            const url = `${API_URL}/loanAPI/loanRequest/getAllRequests`;
             const response = await axios.get(url);
             setRequests(response.data);
         } catch (error) {
@@ -43,7 +44,7 @@ export default function PlatformPage() {
 
     const updateLoanRequest = async (studentCode, newLoanRequestState) => {
         try {
-            const url = 'https://bankapp-backend.onrender.com/loanAPI/loanRequest/updateRequest';
+            const url = `${API_URL}/loanAPI/loanRequest/updateRequest`;
             const data = {
                 studentCode: studentCode,
                 loanRequestState: newLoanRequestState

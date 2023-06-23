@@ -3,41 +3,44 @@ import {Link, useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import './css/projectStyles.css'
 import axios from "axios";
+import {API_URL} from "../config";
 
 export default function PlatformPage() {
-    const storedModel = localStorage.getItem('studentData')
-    const parsedModel = JSON.parse(storedModel)
+    const storedModel = localStorage.getItem('studentData');
+    const parsedModel = JSON.parse(storedModel);
     const [accounts, setAccounts] = useState([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
         const jwtToken = localStorage.getItem('token');
 
         if (!jwtToken) {
-            navigate('/')
+            navigate('/');
         }
 
-        searchAccounts().then(() => {
-            console.log('Datos recibidos...')
-        }).catch((error) => {
-            console.log(error)
-        })
-    }, [])
+        const searchAccounts = async () => {
+            try {
+                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const response = await axios.get(url, {
+                    params: {
+                        studentCode: parsedModel.studentCode
+                    }
+                });
+                setAccounts(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-    const searchAccounts = async () => {
-        try {
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts'
-            const response = await axios.get(url, {
-                params: {
-                    studentCode: parsedModel.studentCode
-                }
+        searchAccounts()
+            .then(() => {
+                console.log('Datos recibidos...');
+            })
+            .catch((error) => {
+                console.log(error);
             });
-            setAccounts(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    }, [navigate, parsedModel.studentCode]);
 
     return (
         <main>
@@ -57,7 +60,7 @@ export default function PlatformPage() {
                 <div className="platform-accounts">
                     <h1>Cuentas de ahorro</h1>
                     <div className="accounts-container">
-                        {accounts.map((account, index) => (
+                        {accounts.map((account) => (
                             <div key={account.accountID} className="account">
                                 <h2>{account.accountName + " - " + account.accountID}</h2>
                                 <p>{account.accountCurrencyType + " " + account.accountBalance}</p>

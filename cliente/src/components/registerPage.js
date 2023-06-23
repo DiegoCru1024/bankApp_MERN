@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import logo from './img/logo.png'
 import './css/projectStyles.css'
+import {API_URL} from "../config";
 
 export default function RegisterPage() {
     const [data, setData] = useState({
@@ -31,7 +32,7 @@ export default function RegisterPage() {
         e.preventDefault();
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/registerAPI';
+            const url = `${API_URL}/registerAPI`;
             const response = await axios.post(url, data);
             console.log(response)
             navigate("/userLogin");

@@ -1,24 +1,40 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from './headerComponent';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import Header from './headerComponent'
+import axios from 'axios'
+import {API_URL} from "../config"
 
 export default function MovementPage() {
-    const navigate = useNavigate();
-    const [accounts, setAccounts] = useState([]);
-    const [movements, setMovements] = useState([]);
-    const storedModel = localStorage.getItem('studentData');
-    const parsedModel = JSON.parse(storedModel);
+    const navigate = useNavigate()
+    const [accounts, setAccounts] = useState([])
+    const [movements, setMovements] = useState([])
+    const [error, setError] = useState('')
+    const storedModel = localStorage.getItem('studentData')
+    const parsedModel = JSON.parse(storedModel)
 
-    const [selectedAccountID, setSelectedAccountID] = useState('');
+    const [selectedAccountID, setSelectedAccountID] = useState('')
 
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
         const jwtToken = localStorage.getItem('token');
 
         if (!jwtToken) {
-            navigate('/');
+            navigate('/')
         }
+
+        const searchAccounts = async () => {
+            try {
+                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const response = await axios.get(url, {
+                    params: {
+                        studentCode: parsedModel.studentCode
+                    }
+                });
+                setAccounts(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
         searchAccounts()
             .then(() => {
@@ -27,40 +43,29 @@ export default function MovementPage() {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
-
-    const searchAccounts = async () => {
-        try {
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts';
-            const response = await axios.get(url, {
-                params: {
-                    studentCode: parsedModel.studentCode,
-                },
-            });
-            setAccounts(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    }, [navigate, parsedModel.studentCode]);
 
     const searchMovements = async () => {
         try {
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getLastMovements';
+            const url = `${API_URL}/operationsAPI/getLastMovements`
             const response = await axios.get(url, {
                 params: {
                     accountID: selectedAccountID,
                 },
-            });
-            setMovements(response.data);
+            })
+            setMovements(response.data)
+            setError('')
         } catch (error) {
-            console.error(error);
+            setMovements([])
+            setError(error.response.data.message)
+            console.error(error)
         }
-    };
+    }
 
     const detectarCambio = (event) => {
-        const value = event.target.value;
-        setSelectedAccountID(value);
-    };
+        const value = event.target.value
+        setSelectedAccountID(value)
+    }
 
     return (
         <main>
@@ -76,7 +81,7 @@ export default function MovementPage() {
                         value={selectedAccountID}
                     >
                         <option value="">-- Elija una opción --</option>
-                        {accounts.map((account, index) => (
+                        {accounts.map((account) => (
                             <option
                                 key={account.accountID}
                                 value={account.accountID}
@@ -90,19 +95,23 @@ export default function MovementPage() {
                         Buscar
                     </button>
 
-                    <div className="accounts-container">
-                        {movements.map((movement, index) => (
-                            <div key={movement.accountID} className="account">
-                                <h2>Monto de
-                                    transferencia: {`${movement.movementCurrencyType} ${movement.movementValue}`}</h2>
+                    <div className="movements-container">
+                        {movements.map((movement) => (
+                            <div key={movement.accountID} className="movement">
                                 <p>
-                                    Origen: {movement.accountOriginID} - Destino: {movement.accountDestinyID}
+                                    <span>Monto de movimiento: </span>{`${movement.movementCurrencyType} ${movement.movementValue}`}
+                                </p>
+                                <p><span>Tipo de movimiento: </span>{movement.movementType}</p>
+                                <p>
+                                    <span>Origen:s</span> {movement.accountOriginID} - <span>Destino:</span> {movement.accountDestinyID}
                                 </p>
                             </div>
                         ))}
                     </div>
+
+                    {error && <div className='error-message'>{error}</div>}
                 </div>
             </div>
         </main>
-    );
+    )
 }

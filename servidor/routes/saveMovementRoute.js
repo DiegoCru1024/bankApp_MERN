@@ -3,7 +3,7 @@ const {accountModel} = require('../models/accountSchema')
 const {movementModel} = require('../models/movementSchema')
 
 router.post('/', async (req, res) => {
-    const {accountOriginID, accountDestinyID, movementValue, movementDate} = req.body;
+    const {accountOriginID, accountDestinyID, movementValue, movementType, movementDate} = req.body;
 
     accountModel.findOne({accountID: accountOriginID.toString()})
         .then(originAccount => {
@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
                 accountDestinyID,
                 movementValue,
                 movementCurrencyType,
+                movementType,
                 movementDate
             });
 

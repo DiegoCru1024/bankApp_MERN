@@ -3,13 +3,17 @@ import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import axios from "axios";
 import './css/projectStyles.css'
+import {API_URL} from "../config";
 
 export default function TransferPage() {
     const storedModel = localStorage.getItem('studentData')
     const parsedModel = JSON.parse(storedModel)
 
     const [data, setData] = useState({
-        accountOriginID: '', accountDestinyID: '', transferValue: ''
+        accountOriginID: '',
+        accountDestinyID: '',
+        transferValue: '',
+
     })
     const [accounts, setAccounts] = useState([]);
     const [resMessage, setResMessage] = useState({message: ''})
@@ -24,12 +28,29 @@ export default function TransferPage() {
             navigate('/')
         }
 
-        searchAccounts().then(() => {
-            console.log('Datos recibidos...')
-        }).catch((error) => {
-            console.log(error.body.message)
-        })
-    }, [])
+        const searchAccounts = async () => {
+            try {
+                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const response = await axios.get(url, {
+                    params: {
+                        studentCode: parsedModel.studentCode
+                    }
+                });
+                setAccounts(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        searchAccounts()
+            .then(() => {
+                console.log('Datos recibidos...');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [navigate, parsedModel.studentCode]);
+
 
     const detectarCambio = (event) => {
         const {name, value} = event.target
@@ -42,7 +63,7 @@ export default function TransferPage() {
         e.preventDefault()
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/transferMoney'
+            const url = `${API_URL}/operationsAPI/transferMoney`
             const response = await axios.post(url, data)
 
             if (response.status === 201) {
@@ -50,10 +71,11 @@ export default function TransferPage() {
                     accountOriginID: data.accountOriginID,
                     accountDestinyID: data.accountDestinyID,
                     movementValue: data.transferValue,
+                    movementType: 'Transferencia',
                     movementDate: new Date().toISOString()
                 }
 
-                const url = 'https://bankapp-backend.onrender.com/operationsAPI/saveMovementInfo'
+                const url = `${API_URL}/operationsAPI/saveMovementInfo`
                 const response = await axios.post(url, movementData)
                 console.log(response)
             }
@@ -62,20 +84,6 @@ export default function TransferPage() {
         } catch (error) {
             setResMessage({message: error.response.data.message})
             setButtonDisabled(false)
-        }
-    };
-
-    const searchAccounts = async () => {
-        try {
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts'
-            const response = await axios.get(url, {
-                params: {
-                    studentCode: parsedModel.studentCode
-                }
-            });
-            setAccounts(response.data);
-        } catch (error) {
-            console.error(error);
         }
     };
 
@@ -88,8 +96,8 @@ export default function TransferPage() {
                     <p>Seleccione la cuenta de origen:</p>
                     <select className="combobox" title="origin" name="accountOriginID" onChange={detectarCambio}>
                         <option value="">-- Elija una opción --</option>
-                        {accounts.map((account, index) => (<option key={account.accountID}
-                                                                   value={account.accountID}>{account.accountName + " - " + account.accountCurrencyType + " " + account.accountBalance}</option>))}
+                        {accounts.map((account) => (<option key={account.accountID}
+                                                            value={account.accountID}>{account.accountName + " - " + account.accountCurrencyType + " " + account.accountBalance}</option>))}
                     </select>
 
                     <p>Ingrese el ID de la cuenta de destino:</p>

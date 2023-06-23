@@ -3,12 +3,12 @@ import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import axios from "axios";
 import './css/projectStyles.css'
+import {API_URL} from "../config";
 
 export default function CreateAccountPage() {
     const [resMessage, setResMessage] = useState({message: ''})
     const storedModel = localStorage.getItem('studentData')
     const parsedModel = JSON.parse(storedModel)
-
     const [data, setData] = useState({
         ownerFirstName: parsedModel.firstName,
         ownerLastName: parsedModel.lastName,
@@ -29,7 +29,7 @@ export default function CreateAccountPage() {
         if (!jwtToken) {
             navigate('/')
         }
-    }, [])
+    }, [navigate])
 
     const detectarCambio = (event) => {
         const {name, value} = event.target
@@ -42,7 +42,7 @@ export default function CreateAccountPage() {
         e.preventDefault();
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/createAccount';
+            const url = `${API_URL}/operationsAPI/createAccount`;
             const {data: res} = await axios.post(url, data);
             navigate("/auth/platform");
             console.log(res.message);

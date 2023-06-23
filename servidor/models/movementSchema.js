@@ -6,6 +6,7 @@ const movementSchema = new mongoose.Schema({
     accountDestinyID: {type: Number, required: true},
     movementValue: {type: Number, required: true},
     movementCurrencyType: {type: String, required: true},
+    movementType: {type: String, required: true},
     movementDate: {type: Date, required: true}
 })
 
@@ -17,6 +18,7 @@ const validarDatosMovimiento = (data) => {
         ownerDesnityID: joi.number().required().label('AccountDestinyID'),
         movementValue: joi.number().required().label('Movement Value'),
         movementCurrencyType: joi.string().required().label('Movement Currency Type'),
+        movementType: joi.string().required().label('Movement Type'),
         movementDate: joi.date().required().label('Movement Date')
     })
     return Schema.validate(data)

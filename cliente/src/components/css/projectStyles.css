@@ -226,7 +226,12 @@
 
 .accounts-container {
     overflow-y: auto;
-    max-height: 525px;
+}
+
+.movements-container {
+    overflow-y: auto;
+    max-height: 30vh;
+    padding-top: 25px;
 }
 
 .account {
@@ -234,6 +239,22 @@
     padding: 20px;
     background: #f2f5f7;
     border: 1px solid #58656f;
+}
+
+.movement{
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f2f5f7;
+    border: 1px solid #58656f;
+    text-align: left;
+}
+
+.movement p{
+    font-size: 20px;
+}
+
+.movement span{
+    font-weight: bolder;
 }
 
 .account h2 {
@@ -422,7 +443,7 @@
     width: 20%;
 }
 
-.loan-buttons button{
+.loan-buttons button {
     width: 100%;
     padding: 5px;
     font-size: 20px;

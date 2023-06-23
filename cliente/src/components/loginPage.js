@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import logo from './img/logo.png'
 import './css/projectStyles.css'
+import {API_URL} from "../config";
 
 export default function LoginPage() {
     const [isButtonDisabled, setButtonDisabled] = useState(false);
@@ -22,7 +23,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/loginAPI'
+            const url = `${API_URL}/loginAPI`
             const {data: res} = await axios.post(url, data)
             localStorage.setItem("token", res.data)
             localStorage.setItem('studentData', JSON.stringify(res.model))

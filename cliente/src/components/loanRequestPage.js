@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import Header from "./headerComponent";
 import './css/projectStyles.css'
 import axios from "axios";
+import {API_URL} from "../config";
 
 export default function LoanRequestPage() {
     const storedModel = localStorage.getItem('studentData');
@@ -29,31 +30,31 @@ export default function LoanRequestPage() {
         const jwtToken = localStorage.getItem('token');
 
         if (!jwtToken) {
-            navigate('/');
+            navigate('/')
         }
 
-        searchLoanAccounts()
+        const searchAccounts = async () => {
+            try {
+                const url = `${API_URL}/operationsAPI/getAccounts`;
+                const response = await axios.get(url, {
+                    params: {
+                        studentCode: parsedModel.studentCode
+                    }
+                });
+                setAccounts(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        searchAccounts()
             .then(() => {
                 console.log('Datos recibidos...');
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
-
-    const searchLoanAccounts = async () => {
-        try {
-            const url = 'https://bankapp-backend.onrender.com/operationsAPI/getAccounts';
-            const response = await axios.get(url, {
-                params: {
-                    studentCode: parsedModel.studentCode,
-                },
-            });
-            setAccounts(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    }, [navigate, parsedModel.studentCode]);
 
     const detectarCambio = (event) => {
         const {name, value} = event.target
@@ -66,7 +67,7 @@ export default function LoanRequestPage() {
         e.preventDefault()
         try {
             setButtonDisabled(true)
-            const url = 'https://bankapp-backend.onrender.com/loanAPI/loanRequest'
+            const url = `${API_URL}/loanAPI/loanRequest`
             const response = await axios.post(url, requestData)
             console.log(response)
             navigate('/auth/platform')

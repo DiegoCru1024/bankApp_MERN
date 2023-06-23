@@ -12,7 +12,11 @@ router.get('/', (req, res) => {
             ]
         })
         .then(movementModels => {
-            res.json(movementModels);
+            if (movementModels.length === 0) {
+                return res.status(400).send({message: 'Esta cuenta no registra movimientos...'})
+            } else {
+                res.json(movementModels);
+            }
         })
         .catch(error => {
             console.error(error);
