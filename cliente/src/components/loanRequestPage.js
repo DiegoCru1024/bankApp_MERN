@@ -33,7 +33,7 @@ export default function LoanRequestPage() {
             navigate('/')
         }
 
-        const searchAccounts = async () => {
+        const searchAccountsRequest = async () => {
             try {
                 const url = `${API_URL}/operationsAPI/getAccounts`;
                 const response = await axios.get(url, {
@@ -47,7 +47,7 @@ export default function LoanRequestPage() {
             }
         };
 
-        searchAccounts()
+        searchAccountsRequest()
             .then(() => {
                 console.log('Datos recibidos...');
             })

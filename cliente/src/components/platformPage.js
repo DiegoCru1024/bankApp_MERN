@@ -19,7 +19,7 @@ export default function PlatformPage() {
             navigate('/');
         }
 
-        const searchAccounts = async () => {
+        const searchAccountsPlatform = async () => {
             try {
                 const url = `${API_URL}/operationsAPI/getAccounts`;
                 const response = await axios.get(url, {
@@ -33,7 +33,7 @@ export default function PlatformPage() {
             }
         };
 
-        searchAccounts()
+        searchAccountsPlatform()
             .then(() => {
                 console.log('Datos recibidos...');
             })

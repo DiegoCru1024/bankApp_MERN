@@ -28,7 +28,7 @@ export default function TransferPage() {
             navigate('/')
         }
 
-        const searchAccounts = async () => {
+        const searchAccountsTransfer = async () => {
             try {
                 const url = `${API_URL}/operationsAPI/getAccounts`;
                 const response = await axios.get(url, {
@@ -42,7 +42,7 @@ export default function TransferPage() {
             }
         };
 
-        searchAccounts()
+        searchAccountsTransfer()
             .then(() => {
                 console.log('Datos recibidos...');
             })
