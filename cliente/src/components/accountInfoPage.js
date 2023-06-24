@@ -17,8 +17,14 @@ export default function AccountInfoPage() {
     // Analizar el modelo almacenado en formato JSON
     const parsedModel = JSON.parse(storedModel)
 
-    // Estado para almacenar el ID de la cuenta seleccionada
-    const [selectedAccountID, setSelectedAccountID] = useState('')
+    //Estado para almacenar la data que será enviada
+    const [error, setError] = useState('')
+    const [response, setResponse] = useState('')
+    const [data, setData] = useState({
+        accountID: '',
+        infoType: '',
+        consent: false
+    });
 
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
@@ -54,14 +60,47 @@ export default function AccountInfoPage() {
     }, [navigate, parsedModel.studentCode])
 
     // Función para detectar el cambio en la selección de cuenta
-    const detectarCambio = (event) => {
-        const value = event.target.value
-        setSelectedAccountID(value)
+    const handleAccountChange = (event) => {
+        const {value} = event.target;
+        setData((prevData) => ({
+            ...prevData,
+            accountID: value
+        }));
+    }
+
+    // Función para detectar el cambio en el tipo de información
+    const handleInfoTypeChange = (event) => {
+        const {value} = event.target;
+        setData((prevData) => ({
+            ...prevData,
+            infoType: value
+        }));
+    }
+
+    // Función para detectar el cambio en el checkbox de consentimiento
+    const handleConsentChange = (event) => {
+        const {checked} = event.target;
+        setData((prevData) => ({
+            ...prevData,
+            consent: checked
+        }));
     }
 
     //Función para generar el estado de cuenta
-    const generateAccountInfo = () => {
-        console.log('Generar')
+    const generateAccountInfo = async (e) => {
+        try {
+            const url = `${API_URL}/infoAPI/generateInfo`
+            const response = await axios.post(url, data)
+            setResponse(response.data.message)
+            setError('')
+
+            if (data.infoType === 'webpage') {
+                navigate(`/auth/accountInfoWeb?accountID=${data.accountID}`)
+            }
+        } catch (error) {
+            setResponse('')
+            setError(error.response.data.error)
+        }
     }
 
     return (
@@ -74,20 +113,38 @@ export default function AccountInfoPage() {
                         className="combobox-movement"
                         title="origin"
                         name="accountOriginID"
-                        onChange={detectarCambio}
-                        value={selectedAccountID}
+                        onChange={handleAccountChange}
+                        value={data.accountID}
                     >
-                        <option value="">-- Elija una opción --</option>
+                        <option value="">-- Elija una cuenta de ahorros --</option>
                         {accounts.map((account) => (
                             <option
                                 key={account.accountID}
                                 value={account.accountID}
-                                selected={account.accountID === selectedAccountID}
+                                selected={account.accountID === data.accountID}
                             >
                                 {`${account.accountName} - ${account.accountCurrencyType} ${account.accountBalance}`}
                             </option>
                         ))}
                     </select>
+                    <select
+                        className="combobox-movement"
+                        title="origin"
+                        name="infoType"
+                        onChange={handleInfoTypeChange}
+                        value={data.infoType}
+                    >
+                        <option value="">-- Elija el método de envío --</option>
+                        <option value="email">Correo electrónico</option>
+                        <option value="delivery">Entrega a domicilio</option>
+                        <option value="webpage">Página web</option>
+                    </select>
+                    <div>
+                        <input id='consent' type='checkbox' checked={data.consent} onChange={handleConsentChange}/>
+                        <label>Acepto los términos y condiciones.</label>
+                    </div>
+                    {error && <div className='error-message'>{error}</div>}
+                    {response && <div className='response-message'>{response}</div>}
                     <button className="main-button-style" onClick={generateAccountInfo}>Generar</button>
                 </div>
             </div>

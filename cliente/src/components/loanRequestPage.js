@@ -24,6 +24,7 @@ export default function LoanRequestPage() {
         studentCode: parsedModel.studentCode,
         studentName: parsedModel.firstName + " " + parsedModel.lastName,
         loanValue: -1,
+        loanCurrencyType: 'PEN',
         loanFeeRate: -1,
         loanJustification: '',
         loanRequestState: 'Pendiente',

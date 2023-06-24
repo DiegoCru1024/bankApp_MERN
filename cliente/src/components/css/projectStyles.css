@@ -26,6 +26,13 @@
     margin-top: 20px;
 }
 
+.response-message {
+    border: 1px solid #28a745;
+    background: #c1f0cc;
+    padding: 10px;
+    margin-top: 20px;
+}
+
 /* Header Styles */
 
 .header-main-container {
@@ -241,7 +248,7 @@
     border: 1px solid #58656f;
 }
 
-.movement{
+.movement {
     margin-bottom: 20px;
     padding: 20px;
     background: #f2f5f7;
@@ -249,11 +256,11 @@
     text-align: left;
 }
 
-.movement p{
+.movement p {
     font-size: 20px;
 }
 
-.movement span{
+.movement span {
     font-weight: bolder;
 }
 
@@ -332,6 +339,7 @@
     padding: 10px;
     width: 100%;
     margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 /* Loan Request Styles */
@@ -449,3 +457,68 @@
     font-size: 20px;
 }
 
+.create-account-menu div input {
+    height: 16px;
+    width: 16px;
+}
+
+.create-account-menu div label {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.movement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.movement-table th,
+.movement-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.movement-table th {
+    background-color: #f2f2f2;
+}
+
+.table-container {
+    max-height: 400px; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
+}
+
+.loanInfo-container {
+    text-align: left;
+    background: #f2f5f7;
+    border: 1px solid #58656f;
+    padding: 50px;
+    width: 50%;
+}
+
+.loanInfo-container span {
+    font-weight: bolder;
+
+}
+
+.loanInfo-container div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 10px 0;
+}
+
+.loanInfo-container h1 {
+    color: var(--naranja);
+    padding: 25px 0;
+}
+
+.loanJustification {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.loanJustification p{
+    text-align: justify;
+}

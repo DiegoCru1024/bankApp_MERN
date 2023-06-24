@@ -15,6 +15,7 @@ const saveMovementRoute = require('./routes/saveMovementRoute')
 const getLastMovementsRoute = require('./routes/getLastMovementsRoute')
 const loanRequestRoute = require('./routes/loanRequestRoute')
 const loanInfoRoute = require('./routes/loanInfoRoute')
+const generateInfoRoute = require('./routes/generateInfoRoute')
 const app = express()
 
 
@@ -24,7 +25,7 @@ mongoDB()
 //Configuración de Express y CORS
 app.disable("x-powered-by")
 const corsOptions = {
-    origin: 'https://www.viabcf.tech',
+    origin: process.env.CORS_URL,
     methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
@@ -33,6 +34,7 @@ const corsOptions = {
 //Middlewares
 app.use(express.json())
 app.use(cors(corsOptions))
+console.log('[LOG] Habilitando CORS para ', process.env.CORS_URL)
 
 //Rutas
 app.use('/loginAPI', loginRoute)
@@ -44,6 +46,7 @@ app.use('/operationsAPI/saveMovementInfo', saveMovementRoute)
 app.use('/operationsAPI/getLastMovements', getLastMovementsRoute)
 app.use('/loanAPI/loanRequest', loanRequestRoute)
 app.use('/loanAPI/loanInfo', loanInfoRoute)
+app.use('/infoAPI/generateInfo', generateInfoRoute)
 
 //Iniciando servidor
 app.listen(process.env.PORT, () => {

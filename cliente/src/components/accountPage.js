@@ -12,7 +12,7 @@ export default function AccountPage() {
         if (!jwtToken) {
             navigate('/')
         }
-    }, [])
+    }, [navigate])
 
     return (
         <main>
