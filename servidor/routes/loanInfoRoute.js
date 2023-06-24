@@ -3,9 +3,9 @@ const router = require('express').Router();
 
 
 router.get('/', (req, res) => {
-    const studentCode = req.query.studentCode;
+    const studentCode = req.query.studentCode.toString();
 
-    loanRequestModel.findOne({studentCode: studentCode.toString()}, {_id: 0}) // Excluye el campo _id en la respuesta
+    loanRequestModel.findOne({studentCode: studentCode}, {_id: 0}) // Excluye el campo _id en la respuesta
         .then(loan => {
             res.json(loan);
         }).catch(error => {
