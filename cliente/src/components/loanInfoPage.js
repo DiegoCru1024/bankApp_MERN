@@ -39,29 +39,27 @@ export default function LoanInfoPage() {
             <section className='create-account-main-container'>
                 <div className='loanInfo-container'>
                     <h1>Información de préstamo</h1>
-                    {loading ? (
-                        <p>Cargando datos...</p>
-                    ) : (
+                    {!loading && (
                         <>
                             <div>
-                                <p><span>Fecha de solicitud: </span> {loanInfo && loanInfo.loanSubmitDate}</p>
+                                <p><span>Fecha de solicitud: </span> {loanInfo?.studentCode}</p>
                             </div>
                             <div>
-                                <p><span>Solicitante:</span> {loanInfo && loanInfo.studentName}</p>
-                                <p><span>Código:</span> {loanInfo && loanInfo.studentCode}</p>
+                                <p><span>Solicitante:</span> {loanInfo?.studentName}</p>
+                                <p><span>Código:</span> {loanInfo?.studentCode}</p>
                             </div>
                             <div>
-                                <p>
-                                    <span>Valor de préstamo: </span> {loanInfo && loanInfo.loanCurrencyType} {loanInfo && loanInfo.loanValue}
+                                <p><span>Valor de préstamo: </span> {loanInfo?.loanCurrencyType} {loanInfo?.loanValue}
                                 </p>
-                                <p><span>Número de cuotas: </span> {loanInfo && loanInfo.loanFeeRate}</p>
+                                <p><span>Número de cuotas: </span> {loanInfo?.loanFeeRate}</p>
                             </div>
                             <div className='loanJustification'>
                                 <span>Justificación de préstamo:</span>
-                                <p>{loanInfo && loanInfo.loanJustification}</p>
+                                <p>{loanInfo?.loanJustification}</p>
                             </div>
                         </>
                     )}
+                    {loading && <p>Cargando datos...</p>}
                 </div>
             </section>
         </main>
