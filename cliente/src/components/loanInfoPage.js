@@ -42,7 +42,7 @@ export default function LoanInfoPage() {
                     {!loading && (
                         <>
                             <div>
-                                <p><span>Fecha de solicitud: </span> {loanInfo?.studentCode}</p>
+                                <p><span>Fecha de solicitud: </span> {loanInfo?.loanSubmitDate}</p>
                             </div>
                             <div>
                                 <p><span>Solicitante:</span> {loanInfo?.studentName}</p>
