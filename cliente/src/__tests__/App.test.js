@@ -12,14 +12,7 @@ const apiData = {
         name: 'John Doe',
         email: 'john@example.com',
         studentCode: 20200019
-    },
-    account: {
-        balance: 1000,
-        transactions: [
-            {id: 1, amount: -100, description: 'Purchase'},
-            {id: 2, amount: 200, description: 'Deposit'},
-        ],
-    },
+    }
 };
 
 test('renders MainPage component', () => {

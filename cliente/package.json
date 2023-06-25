@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll --coverage --transformIgnorePatterns \"node_modules/(?!@codemirror)/\"",
+    "test": "react-scripts test --watchAll --coverage --transformIgnorePatterns \\\\\\\\\\\\\\\"node_modules/(?!@codemirror)/\\\\\\\\\\\\\\\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

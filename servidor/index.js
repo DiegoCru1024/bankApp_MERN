@@ -52,3 +52,5 @@ app.use('/infoAPI/generateInfo', generateInfoRoute)
 app.listen(process.env.PORT, () => {
     console.log('[LOG] Servidor iniciado en el puerto ' + process.env.PORT)
 })
+
+module.exports = app
