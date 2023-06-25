@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 class MainPage extends Component {
     render() {
         return (
-            <body>
+            <div>
             <Helmet>
                 <title>Banco de Crédito Fisiano</title>
             </Helmet>
@@ -33,12 +33,7 @@ class MainPage extends Component {
                         todas tus necesidades bancarias.</p>
                 </div>
             </header>
-
-            <section className="services-container">
-
-            </section>
-
-            </body>
+            </div>
         );
     }
 }
