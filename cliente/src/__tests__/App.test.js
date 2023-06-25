@@ -1,20 +1,10 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
-import App from '../App';
 import MainPage from '../components/mainPage';
 import LoginPage from '../components/loginPage';
 import RegisterPage from '../components/registerPage';
-import PlatformPage from '../components/platformPage';
-import LoanInfoPage from '../components/loanInfoPage';
-import LoanRequestPage from '../components/loanRequestPage';
-import AccountPage from '../components/accountPage';
-import AdminPage from '../components/adminPage';
-import CreateAccountPage from '../components/createAccountPage';
-import TransferPage from '../components/transferPage';
-import MovementPage from '../components/movementPage';
-import AccountInfoPage from '../components/accountInfoPage';
-import AccountInfoWebPage from '../components/accountInfoWebPage';
+
 
 // Simula datos iniciales para las variables obtenidas de la API
 const apiData = {
