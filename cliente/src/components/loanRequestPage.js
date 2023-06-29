@@ -83,6 +83,7 @@ export default function LoanRequestPage() {
             const url = `${API_URL}/loanAPI/loanRequest`
             const response = await axios.post(url, requestData)
             console.log(response)
+            alert('Su solicitud ha sido enviada... \nSerá redirigido a la página principal...')
             navigate('/auth/platform')
         } catch (error) {
             setButtonDisabled(false)

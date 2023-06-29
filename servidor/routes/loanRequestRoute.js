@@ -9,6 +9,10 @@ router.post('/', (req, res) => {
         return res.status(400).send({message: 'Complete los datos antes de enviar...'});
     }
 
+    if (req.body.loanJustification === '') {
+        return res.status(400).send({message: 'Rellenar justificación antes de enviar...'});
+    }
+
     loanRequestModel.findOne({studentCode: studentCode.toString()})
         .then((existingRequest) => {
             if (existingRequest) {

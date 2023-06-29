@@ -55,6 +55,7 @@ export default function CreateAccountPage() {
             setButtonDisabled(true)
             const url = `${API_URL}/operationsAPI/createAccount`
             const {data: res} = await axios.post(url, data)
+            alert('Su cuenta ha sido creada con exito... \nSerá redirigido a la página principal...')
             navigate('/auth/platform')
             console.log(res.message)
         } catch (error) {

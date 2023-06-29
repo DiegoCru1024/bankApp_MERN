@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Header from './headerComponent'
 import axios from 'axios'
 import {API_URL} from "../config"
@@ -24,7 +24,7 @@ export default function MovementPage() {
     const parsedModel = JSON.parse(storedModel)
 
     // Estado para almacenar el ID de la cuenta seleccionada
-    const [selectedAccountID, setSelectedAccountID] = useState('')
+    const [selectedAccountID, setSelectedAccountID] = useState('-1')
 
     useEffect(() => {
         // Verifica si hay un JWT en el almacenamiento
@@ -96,7 +96,7 @@ export default function MovementPage() {
                         onChange={detectarCambio}
                         value={selectedAccountID}
                     >
-                        <option value="">-- Elija una opción --</option>
+                        <option value="-1">-- Elija una opción --</option>
                         {accounts.map((account) => (
                             <option
                                 key={account.accountID}
@@ -126,6 +126,10 @@ export default function MovementPage() {
                     </div>
 
                     {error && <div className='error-message'>{error}</div>}
+                </div>
+
+                <div className='volver-boton-container'>
+                    <Link to="/auth/platform" className='volver-boton'>↶ Volver a la pagina principal</Link>
                 </div>
             </div>
         </main>

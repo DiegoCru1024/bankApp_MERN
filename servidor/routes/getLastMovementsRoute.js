@@ -4,6 +4,10 @@ const {movementModel} = require('../models/movementSchema');
 router.get('/', (req, res) => {
     const accountID = req.query.accountID;
 
+    if (accountID === '-1') {
+        return res.status(400).send({message: 'No se ha seleccionado una cuenta de ahorros...'})
+    }
+
     movementModel
         .find({
             $or: [

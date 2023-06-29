@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
             return res.status(400).send({ message: error.details[0].message });
         }
 
-        studentModel.findOne({ email: req.body.email })
+        studentModel.findOne({ email: req.body.email.toString() })
             .then((modelResponse) => {
                 // Comprobamos que el usuario esté registrado
                 if (!modelResponse) {
