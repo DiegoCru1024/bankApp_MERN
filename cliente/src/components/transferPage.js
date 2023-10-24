@@ -22,7 +22,7 @@ export default function TransferPage() {
     const [resMessage, setResMessage] = useState({message: ''})
 
     // Estado para deshabilitar el botón de envío
-    const [isButtonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     // Hook de navegación
     const navigate = useNavigate()
@@ -119,7 +119,7 @@ export default function TransferPage() {
                         <input type="text" placeholder="Monto a transferir" onChange={detectarCambio} required
                                value={data.transferValue} name="transferValue"></input><br></br>
 
-                        <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Enviar
+                        <button className="main-button-style" type="submit" disabled={buttonDisabled}>Enviar
                         </button>
                     </form>
 

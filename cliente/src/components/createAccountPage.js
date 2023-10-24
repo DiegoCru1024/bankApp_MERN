@@ -25,7 +25,7 @@ export default function CreateAccountPage() {
     })
 
     // Estado para habilitar o deshabilitar el botón
-    const [isButtonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     // Hook de navegación
     const navigate = useNavigate()
@@ -86,7 +86,7 @@ export default function CreateAccountPage() {
                             <label htmlFor="option2">$ Dolares</label>
                         </div>
 
-                        <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Crear Cuenta
+                        <button className="main-button-style" type="submit" disabled={buttonDisabled}>Crear Cuenta
                         </button>
                     </form>
 

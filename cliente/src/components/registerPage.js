@@ -18,7 +18,7 @@ export default function RegisterPage() {
     })
 
     // Estado para deshabilitar el botón de envío
-    const [isButtonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     // Estado para almacenar el mensaje de error
     const [error, setError] = useState("")
@@ -82,7 +82,7 @@ export default function RegisterPage() {
                             {error && <div className='error-message'>{error}</div>}
                             <br></br>
                             <button className="main-button-style" type="submit"
-                                    disabled={isButtonDisabled}>Registrarse
+                                    disabled={buttonDisabled}>Registrarse
                             </button>
                         </form>
                     </div>

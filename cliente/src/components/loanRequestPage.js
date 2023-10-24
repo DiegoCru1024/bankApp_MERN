@@ -11,7 +11,7 @@ export default function LoanRequestPage() {
     const parsedModel = JSON.parse(storedModel)
 
     // Estado para habilitar o deshabilitar el botón
-    const [isButtonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     // Estado para almacenar las cuentas del usuario
     const [accounts, setAccounts] = useState([])
@@ -133,7 +133,7 @@ export default function LoanRequestPage() {
                         <p>Justificación de préstamo:</p>
                         <textarea name='loanJustification' onChange={detectarCambio}/>
                         {error && <div className='error-message'>{error}</div>}
-                        <button className='main-button-style' type="submit" disabled={isButtonDisabled}>Enviar
+                        <button className='main-button-style' type="submit" disabled={buttonDisabled}>Enviar
                             Solicitud
                         </button>
                     </form>

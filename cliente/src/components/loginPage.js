@@ -7,7 +7,7 @@ import {API_URL} from "../config"
 
 export default function LoginPage() {
     // Estado para habilitar o deshabilitar el botón
-    const [isButtonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     // Estado para almacenar los datos del formulario (email y password)
     const [data, setData] = useState({email: '', password: ''})
@@ -62,7 +62,7 @@ export default function LoginPage() {
                             <input type="password" placeholder="Contraseña" onChange={detectarCambio} required
                                    value={data.password} name="password"></input><br></br>
                             <br></br>
-                            <button className="main-button-style" type="submit" disabled={isButtonDisabled}>Iniciar
+                            <button className="main-button-style" type="submit" disabled={buttonDisabled}>Iniciar
                                 Sesión
                             </button>
                         </form>
